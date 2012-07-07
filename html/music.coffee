@@ -182,7 +182,9 @@ main = (sources) ->
     samples_i = 0
     cell = []
     while samples_i < size
-      cell.push Math.abs(Math.floor(current_func(t * 8000 / 44100) % 256))
+      v = Math.abs(Math.floor(current_func(t * 8000 / 44100) % 256))
+      v = 0 if isNaN(v)
+      cell.push v
       t++
       samples_i++
 

@@ -225,11 +225,15 @@ main = function(sources) {
     }
   };
   document.get_samples = function(size) {
-    var cell, samples_i;
+    var cell, samples_i, v;
     samples_i = 0;
     cell = [];
     while (samples_i < size) {
-      cell.push(Math.abs(Math.floor(current_func(t * 8000 / 44100) % 256)));
+      v = Math.abs(Math.floor(current_func(t * 8000 / 44100) % 256));
+      if (isNaN(v)) {
+        v = 0;
+      }
+      cell.push(v);
       t++;
       samples_i++;
       if (t % 5512 === 0) {
