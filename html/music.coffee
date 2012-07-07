@@ -189,7 +189,7 @@ main = (sources) ->
       if t % 1000 == 0
         step_music()
 
-    cell
+    JSON.stringify(cell)
 
 
 

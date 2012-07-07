@@ -236,7 +236,7 @@ main = function(sources) {
         step_music();
       }
     }
-    return cell;
+    return JSON.stringify(cell);
   };
 };
 main();
