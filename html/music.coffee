@@ -182,7 +182,7 @@ main = (sources) ->
     samples_i = 0
     cell = []
     while samples_i < size
-      cell.push current_func(t) % 255
+      cell.push current_func(t) % 256
       t++
       samples_i++
 
