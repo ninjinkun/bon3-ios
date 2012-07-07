@@ -229,7 +229,7 @@ main = function(sources) {
     samples_i = 0;
     cell = [];
     while (samples_i < size) {
-      cell.push(current_func(t * 8000 / 44100) % 256 | 0);
+      cell.push(Math.floor(current_func(t * 8000 / 44100) % 256));
       t++;
       samples_i++;
       if (t % 5512 === 0) {
