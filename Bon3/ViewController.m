@@ -23,7 +23,7 @@
 #define ORIGINAL_SAMPLERATE 8000.0f
 #define FL ((2.0f * 3.14159f) / SAMPLERATE) 
 #define FR ((2.0f * 3.14159f) / SAMPLERATE) 
-#define FRAMECOUNT (10240)
+#define FRAMECOUNT (1024)
 #define NUM_BUFFERS 3
 
 @interface ViewController ()
@@ -102,10 +102,10 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
 	qb->mAudioDataByteSize = 4 * FRAMECOUNT; 
 	// 1 frame per packet, two shorts per frame = 4 * frames 
     NSArray *samples = [self loadSamples];
-    NSLog(@"%@", [samples objectAtIndex:0]);
+    // NSLog(@"%@", [samples objectAtIndex:0]);
 	for(int i = 0; i < ( FRAMECOUNT * 2 ) ; i+=2) {
         NSNumber *sample = [samples objectAtIndex:i / 2];
-        float value = [sample isKindOfClass:[NSNumber class]] ? [sample intValue] : 0;
+        float value = [sample intValue]; //[sample isKindOfClass:[NSNumber class]] ? [sample intValue] : 0;
 		sampleL = value / 256.0;//(amplitude * sin(pitch * FL * (float)phaseL));
 		sampleR = value / 256.0;//(amplitude * sin(pitch * FR * (float)phaseR));
         
