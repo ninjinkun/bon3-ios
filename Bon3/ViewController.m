@@ -63,7 +63,7 @@
 }
 
 -(NSArray *)loadSamples {
-    NSString *js = @"document.get_samples(1024 * 2)";
+    NSString *js = @"document.get_samples(1024)";
     NSString *json = [_hiddenWebView stringByEvaluatingJavaScriptFromString:js];
     NSArray *bytes = [NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
     return bytes;
