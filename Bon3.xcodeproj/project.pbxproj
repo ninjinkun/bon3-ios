@@ -18,6 +18,8 @@
 		26BFDC2D15A820A9007F92F2 /* appimage4.png in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC2715A820A9007F92F2 /* appimage4.png */; };
 		26BFDC2E15A820A9007F92F2 /* appimage5.png in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC2815A820A9007F92F2 /* appimage5.png */; };
 		26BFDC2F15A820A9007F92F2 /* appimage6.png in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC2915A820A9007F92F2 /* appimage6.png */; };
+		26BFDC3415A823FA007F92F2 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC3215A823FA007F92F2 /* index.html */; };
+		26BFDC3615A8256D007F92F2 /* music.js in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC3315A823FA007F92F2 /* music.js */; };
 		26E2D5CD15A077E800BD7F67 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26E2D5CC15A077E800BD7F67 /* UIKit.framework */; };
 		26E2D5CF15A077E800BD7F67 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26E2D5CE15A077E800BD7F67 /* Foundation.framework */; };
 		26E2D5D115A077E800BD7F67 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26E2D5D015A077E800BD7F67 /* CoreGraphics.framework */; };
@@ -47,6 +49,8 @@
 		26BFDC2715A820A9007F92F2 /* appimage4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appimage4.png; path = Images/appimage4.png; sourceTree = "<group>"; };
 		26BFDC2815A820A9007F92F2 /* appimage5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appimage5.png; path = Images/appimage5.png; sourceTree = "<group>"; };
 		26BFDC2915A820A9007F92F2 /* appimage6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appimage6.png; path = Images/appimage6.png; sourceTree = "<group>"; };
+		26BFDC3215A823FA007F92F2 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = html/index.html; sourceTree = "<group>"; };
+		26BFDC3315A823FA007F92F2 /* music.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = music.js; path = html/music.js; sourceTree = "<group>"; };
 		26E2D5C815A077E800BD7F67 /* Bon3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bon3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26E2D5CC15A077E800BD7F67 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		26E2D5CE15A077E800BD7F67 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -98,6 +102,7 @@
 		26BFDC0C15A7FD97007F92F2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				26BFDC3115A823E9007F92F2 /* html */,
 				26BFDC1C15A81F28007F92F2 /* Images */,
 			);
 			name = Resources;
@@ -116,6 +121,15 @@
 				26BFDC1615A80468007F92F2 /* image4.svg */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		26BFDC3115A823E9007F92F2 /* html */ = {
+			isa = PBXGroup;
+			children = (
+				26BFDC3215A823FA007F92F2 /* index.html */,
+				26BFDC3315A823FA007F92F2 /* music.js */,
+			);
+			name = html;
 			sourceTree = "<group>";
 		};
 		26E2D5BD15A077E800BD7F67 = {
@@ -266,6 +280,8 @@
 				26BFDC2D15A820A9007F92F2 /* appimage4.png in Resources */,
 				26BFDC2E15A820A9007F92F2 /* appimage5.png in Resources */,
 				26BFDC2F15A820A9007F92F2 /* appimage6.png in Resources */,
+				26BFDC3415A823FA007F92F2 /* index.html in Resources */,
+				26BFDC3615A8256D007F92F2 /* music.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

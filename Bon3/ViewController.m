@@ -19,7 +19,8 @@
 
 #define BUFFER_SIZE 16384
 #define BUFFER_COUNT 3
-#define SAMPLERATE 8000.0f//44100.0f
+#define SAMPLERATE 44100.0f
+#define ORIGINAL_SAMPLERATE 8000.0f
 #define FL ((2.0f * 3.14159f) / SAMPLERATE) 
 #define FR ((2.0f * 3.14159f) / SAMPLERATE) 
 #define FRAMECOUNT (1024)
@@ -39,17 +40,17 @@
 {
     [super viewDidLoad];
     _hiddenWebView = [[UIWebView alloc] init];
-    _hiddenWebView.frame = self.view.frame;
-    [self.view addSubview:_hiddenWebView];
+//    _hiddenWebView.frame = self.view.frame;
+//    [self.view addSubview:_hiddenWebView];
     OssanView *ossanView = [[OssanView alloc] initWithFrame:self.view.bounds];
-//    [self.view addSubview:ossanView];
+    [self.view addSubview:ossanView];
     double delayInSeconds = 2.0;
     [self loadHtmlFile:@"index"];
 
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
 
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        NSArray *array = [self loadShiki];
+        NSArray *array = [self loadSamples];
         
         NSLog(@"array %@", array);
     });
@@ -61,14 +62,9 @@
     [_hiddenWebView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:path]]];
 }
 
-#define SHIKI_FUNCTION @"document.get_samples"
-
--(NSArray *)loadShiki {
-//    NSString *js = [NSString stringWithFormat:@"%@(%d)", SHIKI_FUNCTION, FRAMECOUNT];
-//    NSLog(@"%@", js);
-    NSString *js = @"window";
+-(NSArray *)loadSamples {
+    NSString *js = @"document.get_samples(1024 * 2)";
     NSString *json = [_hiddenWebView stringByEvaluatingJavaScriptFromString:js];
-    NSLog(@"json %@", json);
     NSArray *bytes = [NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
     return bytes;
 }
@@ -100,6 +96,7 @@
 }
 
 static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) { 
+    ViewController *self = (__bridge ViewController *)in;
 	static int phaseL = 0; 
 	static int phaseR = 0; 
 	
@@ -112,9 +109,13 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
 	
 	qb->mAudioDataByteSize = 4 * FRAMECOUNT; 
 	// 1 frame per packet, two shorts per frame = 4 * frames 
+    NSArray *samples = [self loadSamples];
+
 	for(int i = 0; i < ( FRAMECOUNT * 2 ) ; i+=2) {
-		sampleL = (amplitude * sin(pitch * FL * (float)phaseL));
-		sampleR = (amplitude * sin(pitch * FR * (float)phaseR));
+        NSNumber *sample = [samples objectAtIndex:i / 2];
+        float value = [sample isKindOfClass:[NSNumber class]] ? [sample intValue] : 0;
+		sampleL = value / 256.0;//(amplitude * sin(pitch * FL * (float)phaseL));
+		sampleR = value / 256.0;//(amplitude * sin(pitch * FR * (float)phaseR));
         
 		short sampleIL = (int)(sampleL * 32767.0f); 
 		short sampleIR = (int)(sampleR * 32767.0f); 
@@ -139,7 +140,7 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
     deviceFormat.mChannelsPerFrame = 2;
     deviceFormat.mBitsPerChannel = 8;
     // Create a new output AudioQueue for the device.
-    err = AudioQueueNewOutput(&deviceFormat, aqCallBack, NULL,
+    err = AudioQueueNewOutput(&deviceFormat, aqCallBack, (__bridge void *)self,
                               CFRunLoopGetCurrent(), kCFRunLoopCommonModes,
                               0, &audioQueue);
     // Allocate buffers for the AudioQueue, and pre-fill them.
@@ -148,7 +149,7 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
         AudioQueueBufferRef mBuffer;
         err = AudioQueueAllocateBuffer(audioQueue, FRAMECOUNT * deviceFormat.mBytesPerFrame, &mBuffer);
         if (err != noErr) break;
-        aqCallBack(NULL, audioQueue, mBuffer);
+        aqCallBack((__bridge void *)self, audioQueue, mBuffer);
     }
     if (err == noErr) err = AudioQueueStart(audioQueue, NULL);
     if (err == noErr) CFRunLoopRun();
