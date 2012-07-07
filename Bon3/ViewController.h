@@ -7,10 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SVGKit.h"
 
 @interface ViewController : UIViewController
 @property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (nonatomic, retain) IBOutlet SVGView *contentView;
-
 @end
