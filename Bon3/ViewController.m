@@ -15,32 +15,43 @@
 #import <AudioUnit/AudioUnit.h>
 #define imgExt @"png"
 #define imageToData(x) UIImagePNGRepresentation(x)
+
+#define BUFFER_SIZE 16384
+#define BUFFER_COUNT 3
+#define SAMPLERATE 44100.0f
+#define FL ((2.0f * 3.14159f) / SAMPLERATE) 
+#define FR ((2.0f * 3.14159f) / SAMPLERATE) 
+#define FRAMECOUNT (1024)
+#define NUM_BUFFERS 3
+
 @interface ViewController ()
 
 @end
 
-@implementation ViewController
-@synthesize contentView = _contentView;
+@implementation ViewController {
+    UIWebView *_hiddenWebView;
+    AudioQueueRef audioQueue;
+}
 @synthesize scrollView = _scrollView;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self loadResource:@"image4"];
+    _hiddenWebView = [[UIWebView alloc] init];
+    
 }
 
-- (void)loadResource:(NSString *)name
-{
-    [self.contentView removeFromSuperview];
-    
-	SVGDocument *document = [SVGDocument documentNamed:[name stringByAppendingPathExtension:@"svg"]];
-	NSLog(@"[%@] Freshly loaded document (name = %@) has width,height = (%.2f, %.2f)", [self class], name, document.width, document.height );
-	self.contentView = [[SVGView alloc] initWithDocument:document];
+-(void)loadHtmlFile:(NSString *)name {
+    NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:@"html"];
+    [_hiddenWebView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:path]]];
+}
 
-    [self.scrollView addSubview:self.contentView];
-    [self.scrollView setContentSize:CGSizeMake(document.width * 2, document.height * 2)];
-    [self.scrollView zoomToRect:CGRectMake(0, 0, document.width, document.height) animated:YES];
-    
+#define SHIKI_FUNCTION @"shiki"
+
+-(NSArray *)loadShiki {
+    NSString *json = [_hiddenWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@(%d)", SHIKI_FUNCTION, FRAMECOUNT]];
+    NSArray *bytes = [NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+    return bytes;
 }
 
 - (void)viewDidUnload
@@ -58,8 +69,7 @@
     }
 }
 
--(void)chooseMusicButtonPushed:(id)sender {
-    
+-(void)chooseMusicButtonPushed:(id)sender {    
     MPMediaPickerController *pickerController = [[MPMediaPickerController alloc] initWithMediaTypes:MPMediaTypeMusic];
     pickerController.delegate = self;
     [self presentViewController:pickerController animated:NO completion:nil];
@@ -67,17 +77,8 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    SetupAudioQueue();
+    [self setupAudioQueue];
 }
-
-#define BUFFER_SIZE 16384
-#define BUFFER_COUNT 3
-static AudioQueueRef audioQueue;
-#define SAMPLERATE 44100.0f
-#define FL ((2.0f * 3.14159f) / SAMPLERATE) 
-#define FR ((2.0f * 3.14159f) / SAMPLERATE) 
-#define FRAMECOUNT (1024)
-#define NUM_BUFFERS 3
 
 static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) { 
 	static int phaseL = 0; 
@@ -107,7 +108,7 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
 	AudioQueueEnqueueBuffer(q, qb, 0, NULL); 
 } 
 
-void SetupAudioQueue() {
+-(void)setupAudioQueue {
     OSStatus err = noErr;
     // Setup the audio device.
     AudioStreamBasicDescription deviceFormat;
