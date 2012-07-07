@@ -182,11 +182,11 @@ main = (sources) ->
     samples_i = 0
     cell = []
     while samples_i < size
-      cell.push current_func(t * 8000 / 44100) % 256 | 0
+      cell.push current_func(t) % 256
       t++
       samples_i++
 
-      if t % 5512 == 0
+      if t % 1000 == 0
         step_music()
 
     JSON.stringify(cell)
