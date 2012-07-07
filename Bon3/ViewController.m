@@ -44,17 +44,7 @@
 //    [self.view addSubview:_hiddenWebView];
     OssanView *ossanView = [[OssanView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:ossanView];
-    double delayInSeconds = 2.0;
-    [self loadHtmlFile:@"index"];
-
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        NSArray *array = [self loadSamples];
-        
-        NSLog(@"array %@", array);
-    });
-    
+    [self loadHtmlFile:@"index"];    
 }
 
 -(void)loadHtmlFile:(NSString *)name {
