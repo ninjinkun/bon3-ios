@@ -86,20 +86,19 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
 	
 	short *sinBuffer = (short *)qb->mAudioData; 
 	
-    int sampleL = 0.0f; 
-    int sampleR = 0.0f; 
+    float sampleL = 0.0f; 
+    float sampleR = 0.0f; 
 	
-	float amplitude = 1.0f, pitch=100.0f;
+	float amplitude = 1.0f, pitch=400.0f;
 	
 	qb->mAudioDataByteSize = 4 * FRAMECOUNT; 
 	// 1 frame per packet, two shorts per frame = 4 * frames 
 	for(int i = 0; i < ( FRAMECOUNT * 2 ) ; i+=2) {
-//		sampleL = (amplitude * sin(pitch * FL * (float)phaseL));
-        sampleR = sampleL = sin(i/10) * 80 + 120;
-//		sampleR = (amplitude * sin(pitch * FR * (float)phaseR));
+		sampleL = (amplitude * sin(pitch * FL * (float)phaseL));
+		sampleR = (amplitude * sin(pitch * FR * (float)phaseR));
         
-		short sampleIL = sampleL % 256;//(int)(sampleL * 32767.0f); 
-		short sampleIR = sampleR % 256;//(int)(sampleR * 32767.0f); 
+		short sampleIL = (int)(sampleL * 32767.0f); 
+		short sampleIR = (int)(sampleR * 32767.0f); 
 		sinBuffer[i] = sampleIL; 
 		sinBuffer[i+1] = sampleIR; 
 		phaseL++; 
@@ -112,20 +111,20 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
     OSStatus err = noErr;
     // Setup the audio device.
     AudioStreamBasicDescription deviceFormat;
-    deviceFormat.mSampleRate = 8000;
+    deviceFormat.mSampleRate = SAMPLERATE;
     deviceFormat.mFormatID = kAudioFormatLinearPCM;
     deviceFormat.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger;
     deviceFormat.mBytesPerPacket = 4;
     deviceFormat.mFramesPerPacket = 1;
     deviceFormat.mBytesPerFrame = 4;
     deviceFormat.mChannelsPerFrame = 2;
-    deviceFormat.mBitsPerChannel = 8;
-    deviceFormat.mReserved = 0;
+    deviceFormat.mBitsPerChannel = 16;
     // Create a new output AudioQueue for the device.
     err = AudioQueueNewOutput(&deviceFormat, aqCallBack, NULL,
                               CFRunLoopGetCurrent(), kCFRunLoopCommonModes,
                               0, &audioQueue);
     // Allocate buffers for the AudioQueue, and pre-fill them.
+
     for (int i = 0; i < NUM_BUFFERS; ++i) {
         AudioQueueBufferRef mBuffer;
         err = AudioQueueAllocateBuffer(audioQueue, FRAMECOUNT * deviceFormat.mBytesPerFrame, &mBuffer);
