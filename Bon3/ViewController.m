@@ -39,8 +39,21 @@
 {
     [super viewDidLoad];
     _hiddenWebView = [[UIWebView alloc] init];
+    _hiddenWebView.frame = self.view.frame;
+    [self.view addSubview:_hiddenWebView];
     OssanView *ossanView = [[OssanView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:ossanView];
+//    [self.view addSubview:ossanView];
+    double delayInSeconds = 2.0;
+    [self loadHtmlFile:@"index"];
+
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        NSArray *array = [self loadShiki];
+        
+        NSLog(@"array %@", array);
+    });
+    
 }
 
 -(void)loadHtmlFile:(NSString *)name {
@@ -48,10 +61,14 @@
     [_hiddenWebView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:path]]];
 }
 
-#define SHIKI_FUNCTION @"shiki"
+#define SHIKI_FUNCTION @"document.get_samples"
 
 -(NSArray *)loadShiki {
-    NSString *json = [_hiddenWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@(%d)", SHIKI_FUNCTION, FRAMECOUNT]];
+//    NSString *js = [NSString stringWithFormat:@"%@(%d)", SHIKI_FUNCTION, FRAMECOUNT];
+//    NSLog(@"%@", js);
+    NSString *js = @"window";
+    NSString *json = [_hiddenWebView stringByEvaluatingJavaScriptFromString:js];
+    NSLog(@"json %@", json);
     NSArray *bytes = [NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
     return bytes;
 }
