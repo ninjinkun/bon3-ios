@@ -11,6 +11,13 @@
 		26BFDC1315A80220007F92F2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26BFDC1115A80220007F92F2 /* AudioToolbox.framework */; };
 		26BFDC1715A80468007F92F2 /* image4-color.svg in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC1515A80468007F92F2 /* image4-color.svg */; };
 		26BFDC1815A80468007F92F2 /* image4.svg in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC1615A80468007F92F2 /* image4.svg */; };
+		26BFDC1F15A82031007F92F2 /* OssanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26BFDC1E15A82031007F92F2 /* OssanView.m */; };
+		26BFDC2A15A820A9007F92F2 /* appimage1.png in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC2415A820A9007F92F2 /* appimage1.png */; };
+		26BFDC2B15A820A9007F92F2 /* appimage2.png in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC2515A820A9007F92F2 /* appimage2.png */; };
+		26BFDC2C15A820A9007F92F2 /* appimage3.png in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC2615A820A9007F92F2 /* appimage3.png */; };
+		26BFDC2D15A820A9007F92F2 /* appimage4.png in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC2715A820A9007F92F2 /* appimage4.png */; };
+		26BFDC2E15A820A9007F92F2 /* appimage5.png in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC2815A820A9007F92F2 /* appimage5.png */; };
+		26BFDC2F15A820A9007F92F2 /* appimage6.png in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC2915A820A9007F92F2 /* appimage6.png */; };
 		26E2D5CD15A077E800BD7F67 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26E2D5CC15A077E800BD7F67 /* UIKit.framework */; };
 		26E2D5CF15A077E800BD7F67 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26E2D5CE15A077E800BD7F67 /* Foundation.framework */; };
 		26E2D5D115A077E800BD7F67 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26E2D5D015A077E800BD7F67 /* CoreGraphics.framework */; };
@@ -32,6 +39,14 @@
 		26BFDC1115A80220007F92F2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		26BFDC1515A80468007F92F2 /* image4-color.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "image4-color.svg"; path = "Images/image4-color.svg"; sourceTree = "<group>"; };
 		26BFDC1615A80468007F92F2 /* image4.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = image4.svg; path = Images/image4.svg; sourceTree = "<group>"; };
+		26BFDC1D15A82031007F92F2 /* OssanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OssanView.h; sourceTree = "<group>"; };
+		26BFDC1E15A82031007F92F2 /* OssanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OssanView.m; sourceTree = "<group>"; };
+		26BFDC2415A820A9007F92F2 /* appimage1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appimage1.png; path = Images/appimage1.png; sourceTree = "<group>"; };
+		26BFDC2515A820A9007F92F2 /* appimage2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appimage2.png; path = Images/appimage2.png; sourceTree = "<group>"; };
+		26BFDC2615A820A9007F92F2 /* appimage3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appimage3.png; path = Images/appimage3.png; sourceTree = "<group>"; };
+		26BFDC2715A820A9007F92F2 /* appimage4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appimage4.png; path = Images/appimage4.png; sourceTree = "<group>"; };
+		26BFDC2815A820A9007F92F2 /* appimage5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appimage5.png; path = Images/appimage5.png; sourceTree = "<group>"; };
+		26BFDC2915A820A9007F92F2 /* appimage6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appimage6.png; path = Images/appimage6.png; sourceTree = "<group>"; };
 		26E2D5C815A077E800BD7F67 /* Bon3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bon3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26E2D5CC15A077E800BD7F67 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		26E2D5CE15A077E800BD7F67 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -83,10 +98,24 @@
 		26BFDC0C15A7FD97007F92F2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				26BFDC1C15A81F28007F92F2 /* Images */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		26BFDC1C15A81F28007F92F2 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				26BFDC2415A820A9007F92F2 /* appimage1.png */,
+				26BFDC2515A820A9007F92F2 /* appimage2.png */,
+				26BFDC2615A820A9007F92F2 /* appimage3.png */,
+				26BFDC2715A820A9007F92F2 /* appimage4.png */,
+				26BFDC2815A820A9007F92F2 /* appimage5.png */,
+				26BFDC2915A820A9007F92F2 /* appimage6.png */,
 				26BFDC1515A80468007F92F2 /* image4-color.svg */,
 				26BFDC1615A80468007F92F2 /* image4.svg */,
 			);
-			name = Resources;
+			name = Images;
 			sourceTree = "<group>";
 		};
 		26E2D5BD15A077E800BD7F67 = {
@@ -154,6 +183,8 @@
 		26E2D5EC15A0780600BD7F67 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				26BFDC1D15A82031007F92F2 /* OssanView.h */,
+				26BFDC1E15A82031007F92F2 /* OssanView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -229,6 +260,12 @@
 				26E2D5E315A077E800BD7F67 /* MainStoryboard_iPad.storyboard in Resources */,
 				26BFDC1715A80468007F92F2 /* image4-color.svg in Resources */,
 				26BFDC1815A80468007F92F2 /* image4.svg in Resources */,
+				26BFDC2A15A820A9007F92F2 /* appimage1.png in Resources */,
+				26BFDC2B15A820A9007F92F2 /* appimage2.png in Resources */,
+				26BFDC2C15A820A9007F92F2 /* appimage3.png in Resources */,
+				26BFDC2D15A820A9007F92F2 /* appimage4.png in Resources */,
+				26BFDC2E15A820A9007F92F2 /* appimage5.png in Resources */,
+				26BFDC2F15A820A9007F92F2 /* appimage6.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +279,7 @@
 				26E2D5D915A077E800BD7F67 /* main.m in Sources */,
 				26E2D5DD15A077E800BD7F67 /* AppDelegate.m in Sources */,
 				26E2D5E615A077E800BD7F67 /* ViewController.m in Sources */,
+				26BFDC1F15A82031007F92F2 /* OssanView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

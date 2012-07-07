@@ -13,6 +13,7 @@
 #import <CoreMedia/CoreMedia.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <AudioUnit/AudioUnit.h>
+#import "OssanView.h"
 #define imgExt @"png"
 #define imageToData(x) UIImagePNGRepresentation(x)
 
@@ -38,7 +39,8 @@
 {
     [super viewDidLoad];
     _hiddenWebView = [[UIWebView alloc] init];
-    
+    OssanView *ossanView = [[OssanView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:ossanView];
 }
 
 -(void)loadHtmlFile:(NSString *)name {
@@ -89,7 +91,7 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
     float sampleL = 0.0f; 
     float sampleR = 0.0f; 
 	
-	float amplitude = 1.0f, pitch=400.0f;
+	float amplitude = 1.0f, pitch= 100.0f;
 	
 	qb->mAudioDataByteSize = 4 * FRAMECOUNT; 
 	// 1 frame per packet, two shorts per frame = 4 * frames 
