@@ -33,6 +33,7 @@
 @implementation ViewController {
     UIWebView *_hiddenWebView;
     AudioQueueRef audioQueue;
+    OssanView *_ossanView;
 }
 @synthesize scrollView = _scrollView;
 
@@ -40,10 +41,8 @@
 {
     [super viewDidLoad];
     _hiddenWebView = [[UIWebView alloc] init];
-//    _hiddenWebView.frame = self.view.frame;
-//    [self.view addSubview:_hiddenWebView];
-    OssanView *ossanView = [[OssanView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:ossanView];
+    _ossanView = [[OssanView alloc] initWithFrame:self.view.bounds];
+    [self.scrollView addSubview:_ossanView];
     [self loadHtmlFile:@"index"];    
 }
 
@@ -59,6 +58,19 @@
     return bytes;
 }
 
+-(void)ossanJamp:(float)height {
+    height = height > 20 ? height : 0;
+    CGRect frame = _ossanView.frame;
+    frame.origin.y = -height;
+    _ossanView.frame = frame;
+    if (height == 0) {
+        [_ossanView landing];
+    }
+    else {
+        [_ossanView changeImage];
+    }
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -67,11 +79,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-    } else {
-        return YES;
-    }
+    return YES;
 }
 
 -(void)chooseMusicButtonPushed:(id)sender {    
@@ -117,6 +125,26 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
 		phaseR++; 
 	} 
     OSStatus error = AudioQueueEnqueueBuffer(q, qb, 0, NULL);
+    
+    DSPSplitComplex splitComplex;
+    splitComplex.realp = calloc(FRAMECOUNT, sizeof(float));
+    splitComplex.imagp = calloc(FRAMECOUNT, sizeof(float));
+    for (int i = 0; i < FRAMECOUNT; i++) {
+        splitComplex.realp[i] = sinBuffer[i];
+    }
+    FFTSetup fftSetup = vDSP_create_fftsetup(9, FFT_RADIX2);
+    vDSP_fft_zrip(fftSetup, &splitComplex, 1, 9, FFT_FORWARD);
+    vDSP_destroy_fftsetup(fftSetup);
+    free(splitComplex.realp);
+    free(splitComplex.imagp);
+    int spectrum[4];
+    for (int i=0; i< FRAMECOUNT / 2; i++) {// 半分よりあっち側は無意味なので無視するよ!
+        float real = splitComplex.realp[i];
+        float imag = splitComplex.imagp[i];
+        float distance = sqrt(real*real + imag*imag);
+        spectrum[i / (FRAMECOUNT / 2 / 4)] += distance;
+    }
+    [self ossanJamp:spectrum[1] / 80000];
 } 
 
 -(void)setupAudioQueue {

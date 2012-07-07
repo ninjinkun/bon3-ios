@@ -36,11 +36,17 @@
 
 -(void)changeImage {
     UIImage *image = [_ossanImages objectAtIndex:rand() % _ossanImages.count];
+    [CATransaction begin];
+    [CATransaction setDisableActions: YES];
     _ossanImageLayer.contents = (__bridge id)image.CGImage;
+    [CATransaction commit];
 }
 
 -(void)landing {
+    [CATransaction begin];
+    [CATransaction setDisableActions: YES];
     _ossanImageLayer.contents = (__bridge id)_landingOssanImage.CGImage;
+    [CATransaction commit];
 }
 
 @end

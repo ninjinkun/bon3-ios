@@ -379,6 +379,7 @@
 		26E2D5EA15A077E800BD7F67 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bon3/Bon3-Prefix.pch";
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
