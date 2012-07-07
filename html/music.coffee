@@ -182,7 +182,7 @@ main = (sources) ->
     samples_i = 0
     cell = []
     while samples_i < size
-      cell.push Math.floor(current_func(t * 8000 / 44100) % 256)
+      cell.push Math.abs(Math.floor(current_func(t * 8000 / 44100) % 256))
       t++
       samples_i++
 
