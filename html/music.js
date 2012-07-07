@@ -224,7 +224,7 @@ main = function(sources) {
       }
     }
   };
-  return document.get_samples = function(size) {
+  document.get_samples = function(size) {
     var cell, samples_i;
     samples_i = 0;
     cell = [];
@@ -237,6 +237,10 @@ main = function(sources) {
       }
     }
     return JSON.stringify(cell);
+  };
+  return document.reset = function() {
+    setTracks();
+    return setIndexes();
   };
 };
 main();

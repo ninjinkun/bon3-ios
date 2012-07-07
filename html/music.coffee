@@ -191,7 +191,9 @@ main = (sources) ->
 
     JSON.stringify(cell)
 
-
+  document.reset = ->
+    setTracks()
+    setIndexes()
 
 main()
 
