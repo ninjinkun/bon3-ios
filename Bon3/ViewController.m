@@ -18,7 +18,7 @@
 
 #define BUFFER_SIZE 16384
 #define BUFFER_COUNT 3
-#define SAMPLERATE 44100.0f
+#define SAMPLERATE 8000.0f//44100.0f
 #define FL ((2.0f * 3.14159f) / SAMPLERATE) 
 #define FR ((2.0f * 3.14159f) / SAMPLERATE) 
 #define FRAMECOUNT (1024)
@@ -118,7 +118,7 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
     deviceFormat.mFramesPerPacket = 1;
     deviceFormat.mBytesPerFrame = 4;
     deviceFormat.mChannelsPerFrame = 2;
-    deviceFormat.mBitsPerChannel = 16;
+    deviceFormat.mBitsPerChannel = 8;
     // Create a new output AudioQueue for the device.
     err = AudioQueueNewOutput(&deviceFormat, aqCallBack, NULL,
                               CFRunLoopGetCurrent(), kCFRunLoopCommonModes,
