@@ -229,10 +229,10 @@ main = function(sources) {
     samples_i = 0;
     cell = [];
     while (samples_i < size) {
-      cell.push(current_func(t) % 256);
+      cell.push(current_func(t * 8000 / 44100) % 256 | 0);
       t++;
       samples_i++;
-      if (t % 1000 === 0) {
+      if (t % 5512 === 0) {
         step_music();
       }
     }
