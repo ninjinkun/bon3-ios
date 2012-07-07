@@ -63,7 +63,7 @@
 }
 
 -(NSArray *)loadSamples {
-    NSString *js = [NSString stringWithFormat:@"document.get_samples(%@)", FRAMECOUNT];
+    NSString *js = [NSString stringWithFormat:@"document.get_samples(%d)", FRAMECOUNT];
     NSString *json = [_hiddenWebView stringByEvaluatingJavaScriptFromString:js];
     NSArray *bytes = [NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
     return bytes;
