@@ -23,7 +23,7 @@
 #define ORIGINAL_SAMPLERATE 8000.0f
 #define FL ((2.0f * 3.14159f) / SAMPLERATE) 
 #define FR ((2.0f * 3.14159f) / SAMPLERATE) 
-#define FRAMECOUNT (1024)
+#define FRAMECOUNT (10240)
 #define NUM_BUFFERS 3
 
 @interface ViewController ()
