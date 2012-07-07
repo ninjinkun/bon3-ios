@@ -63,7 +63,7 @@
 }
 
 -(NSArray *)loadSamples {
-    NSString *js = @"document.get_samples(1024)";
+    NSString *js = [NSString stringWithFormat:@"document.get_samples(%@)", FRAMECOUNT];
     NSString *json = [_hiddenWebView stringByEvaluatingJavaScriptFromString:js];
     NSArray *bytes = [NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
     return bytes;
@@ -104,13 +104,11 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
 	
     float sampleL = 0.0f; 
     float sampleR = 0.0f; 
-	
-	float amplitude = 1.0f, pitch= 100.0f;
-	
+		
 	qb->mAudioDataByteSize = 4 * FRAMECOUNT; 
 	// 1 frame per packet, two shorts per frame = 4 * frames 
     NSArray *samples = [self loadSamples];
-
+    NSLog(@"%@", [samples objectAtIndex:0]);
 	for(int i = 0; i < ( FRAMECOUNT * 2 ) ; i+=2) {
         NSNumber *sample = [samples objectAtIndex:i / 2];
         float value = [sample isKindOfClass:[NSNumber class]] ? [sample intValue] : 0;
@@ -124,7 +122,7 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
 		phaseL++; 
 		phaseR++; 
 	}//end for
-	AudioQueueEnqueueBuffer(q, qb, 0, NULL); 
+    OSStatus error = AudioQueueEnqueueBuffer(q, qb, 0, NULL);
 } 
 
 -(void)setupAudioQueue {
