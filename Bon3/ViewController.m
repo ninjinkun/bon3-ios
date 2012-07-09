@@ -14,20 +14,22 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <AudioUnit/AudioUnit.h>
 #import "OssanView.h"
-#define imgExt @"png"
-#define imageToData(x) UIImagePNGRepresentation(x)
 
 #define BUFFER_SIZE 16384
 #define BUFFER_COUNT 3
+#define MUSIC_LENGTH_SECONDS (10)
 #define SAMPLERATE 44100.0f
 #define ORIGINAL_SAMPLERATE 8000.0f
 #define FL ((2.0f * 3.14159f) / SAMPLERATE) 
 #define FR ((2.0f * 3.14159f) / SAMPLERATE) 
 #define FRAMECOUNT (1024)
+#define PRELOADING_FRAMECOUNT (MUSIC_LENGTH_SECONDS * SAMPLERATE)
 #define NUM_BUFFERS 3
 
 @interface ViewController ()
-
+@property (nonatomic) short *playingSamples;
+@property (nonatomic) short *loadedSamples;
+@property (nonatomic) NSInteger curretnPlayingIndex;
 @end
 
 @implementation ViewController {
@@ -36,14 +38,21 @@
     OssanView *_ossanView;
 }
 @synthesize scrollView = _scrollView;
+@synthesize loadedSamples = _loadedSamples;
+@synthesize playingSamples = _playingSamples;
+@synthesize curretnPlayingIndex = _curretnPlayingIndex;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setUpViews];
+    [self loadHtmlFile:@"index"];    
+}
+
+-(void)setUpViews {
     _hiddenWebView = [[UIWebView alloc] init];
     _ossanView = [[OssanView alloc] initWithFrame:self.view.bounds];
-    [self.scrollView addSubview:_ossanView];
-    [self loadHtmlFile:@"index"];    
+    [self.scrollView addSubview:_ossanView];    
 }
 
 -(void)loadHtmlFile:(NSString *)name {
@@ -51,8 +60,18 @@
     [_hiddenWebView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:path]]];
 }
 
--(NSArray *)loadSamples {
-    NSString *js = [NSString stringWithFormat:@"document.get_samples(%d)", FRAMECOUNT];
+-(void)loadSamples {
+    NSArray *samples = [self getSamplesWithJS];
+    free(_loadedSamples);
+    _loadedSamples = calloc(PRELOADING_FRAMECOUNT, sizeof(short));
+    int i = 0;    
+    for (NSNumber *number in samples) {        
+        _loadedSamples[i++] = [number shortValue];
+    }
+}
+
+-(NSArray *)getSamplesWithJS {
+    NSString *js = [NSString stringWithFormat:@"document.get_samples(%d)", (NSInteger)PRELOADING_FRAMECOUNT];    
     NSString *json = [_hiddenWebView stringByEvaluatingJavaScriptFromString:js];
     NSArray *bytes = [NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
     return bytes;
@@ -82,17 +101,14 @@
     return YES;
 }
 
--(void)chooseMusicButtonPushed:(id)sender {    
-    MPMediaPickerController *pickerController = [[MPMediaPickerController alloc] initWithMediaTypes:MPMediaTypeMusic];
-    pickerController.delegate = self;
-    [self presentViewController:pickerController animated:NO completion:nil];
-}
-
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        self.curretnPlayingIndex = 0;
+        [self loadSamples];
+        self.playingSamples = self.loadedSamples;        
         [self setupAudioQueue];
     });
 }
@@ -109,43 +125,54 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
 		
 	qb->mAudioDataByteSize = 4 * FRAMECOUNT; 
 	// 1 frame per packet, two shorts per frame = 4 * frames 
-    NSArray *samples = [self loadSamples];
-    // NSLog(@"%@", [samples objectAtIndex:0]);
-	for(int i = 0; i < ( FRAMECOUNT * 2 ) ; i+=2) {
-        NSNumber *sample = [samples objectAtIndex:i / 2];
-        float value = [sample intValue]; //[sample isKindOfClass:[NSNumber class]] ? [sample intValue] : 0;
+    short fftBuf[FRAMECOUNT];
+	for(int i = 0; i < ( FRAMECOUNT * 2 ) ; i+=2) {        
+        float value = fabs(self.playingSamples[i/2 + self.curretnPlayingIndex]);
 		sampleL = value / 256.0;//(amplitude * sin(pitch * FL * (float)phaseL));
 		sampleR = value / 256.0;//(amplitude * sin(pitch * FR * (float)phaseR));
-        
 		short sampleIL = (int)(sampleL * 32767.0f); 
 		short sampleIR = (int)(sampleR * 32767.0f); 
 		sinBuffer[i] = sampleIL; 
 		sinBuffer[i+1] = sampleIR; 
+        fftBuf[i/2] = sampleIL;
 		phaseL++; 
 		phaseR++; 
 	} 
-    OSStatus error = AudioQueueEnqueueBuffer(q, qb, 0, NULL);
+    self.curretnPlayingIndex += FRAMECOUNT;
+    AudioQueueEnqueueBuffer(q, qb, 0, NULL);    
     
     DSPSplitComplex splitComplex;
     splitComplex.realp = calloc(FRAMECOUNT, sizeof(float));
     splitComplex.imagp = calloc(FRAMECOUNT, sizeof(float));
     for (int i = 0; i < FRAMECOUNT; i++) {
-        splitComplex.realp[i] = sinBuffer[i];
+        splitComplex.realp[i] = fftBuf[i];
     }
     FFTSetup fftSetup = vDSP_create_fftsetup(9, FFT_RADIX2);
     vDSP_fft_zrip(fftSetup, &splitComplex, 1, 9, FFT_FORWARD);
-    vDSP_destroy_fftsetup(fftSetup);
-    free(splitComplex.realp);
-    free(splitComplex.imagp);
-    int spectrum[4];
-    for (int i=0; i< FRAMECOUNT / 2; i++) {// 半分よりあっち側は無意味なので無視するよ!
+    vDSP_destroy_fftsetup(fftSetup);    
+    int spectrum[4] = {0, 0, 0, 0};
+    
+    for (int i=0; i< FRAMECOUNT / 2; i++) {
         float real = splitComplex.realp[i];
         float imag = splitComplex.imagp[i];
         float distance = sqrt(real*real + imag*imag);
-        spectrum[i / (FRAMECOUNT / 2 / 4)] += distance;
-    }
-    [self ossanJamp:spectrum[1] / 80000];
+        int index = i / (FRAMECOUNT / 2 / 4);
+        spectrum[index] += distance;
+    }    
+
+    [self ossanJamp:spectrum[1] / 80000];            
+
+    
+    free(splitComplex.realp);
+    free(splitComplex.imagp);
+    if (self.curretnPlayingIndex >= PRELOADING_FRAMECOUNT) {
+        self.playingSamples = self.loadedSamples;  // 曲が入れ替わる
+        self.curretnPlayingIndex = 0;
+        [self loadSamples]; // 次の曲の準備
+    }    
 } 
+
+
 
 -(void)setupAudioQueue {
     OSStatus err = noErr;
