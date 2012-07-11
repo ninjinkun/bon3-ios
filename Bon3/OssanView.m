@@ -34,17 +34,21 @@
     return self;
 }
 
+-(void)layoutSubviews {
+    _ossanImageLayer.frame = self.bounds;
+}
+
 -(void)changeImage {
-    UIImage *image = [_ossanImages objectAtIndex:rand() % _ossanImages.count];
+    UIImage *image = [_ossanImages objectAtIndex:arc4random() % _ossanImages.count];
     [CATransaction begin];
-    [CATransaction setDisableActions: YES];
+    [CATransaction setDisableActions:YES]; // disable implicit animation
     _ossanImageLayer.contents = (__bridge id)image.CGImage;
     [CATransaction commit];
 }
 
 -(void)landing {
     [CATransaction begin];
-    [CATransaction setDisableActions: YES];
+    [CATransaction setDisableActions:YES];  // disable implicit animation
     _ossanImageLayer.contents = (__bridge id)_landingOssanImage.CGImage;
     [CATransaction commit];
 }

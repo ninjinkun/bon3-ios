@@ -14,10 +14,10 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <AudioUnit/AudioUnit.h>
 #import "OssanView.h"
-
+#import "OssansBaseView.h"
 #define BUFFER_SIZE 16384
 #define BUFFER_COUNT 3
-#define MUSIC_LENGTH_SECONDS (10)
+#define MUSIC_LENGTH_SECONDS (1)
 #define SAMPLERATE 44100.0f
 #define ORIGINAL_SAMPLERATE 8000.0f
 #define FL ((2.0f * 3.14159f) / SAMPLERATE) 
@@ -27,15 +27,15 @@
 #define NUM_BUFFERS 3
 
 @interface ViewController ()
-@property (nonatomic) short *playingSamples;
-@property (nonatomic) short *loadedSamples;
+@property (nonatomic) NSString *playingSamples;
+@property (nonatomic) NSString *loadedSamples;
 @property (nonatomic) NSInteger curretnPlayingIndex;
 @end
 
 @implementation ViewController {
     UIWebView *_hiddenWebView;
     AudioQueueRef audioQueue;
-    OssanView *_ossanView;
+    OssansBaseView *_ossanView;
 }
 @synthesize scrollView = _scrollView;
 @synthesize loadedSamples = _loadedSamples;
@@ -51,9 +51,18 @@
 
 -(void)setUpViews {
     _hiddenWebView = [[UIWebView alloc] init];
-    _ossanView = [[OssanView alloc] initWithFrame:self.view.bounds];
+    _ossanView = [[OssansBaseView alloc] initWithFrame:self.view.bounds];    
+    _ossanView.ossansCount = 1;
+//    UIPanGestureRecognizer *recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragged:)];
+//    [_ossanView addGestureRecognizer:recognizer];
     [self.scrollView addSubview:_ossanView];    
 }
+
+//-(void)dragged:(UIPanGestureRecognizer *)sender {
+//    CGRect frame = sender.view.frame;
+//    frame.origin = [sender translationInView:sender.view];
+//    sender.view.frame = frame;
+//}
 
 -(void)loadHtmlFile:(NSString *)name {
     NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:@"html"];
@@ -61,20 +70,19 @@
 }
 
 -(void)loadSamples {
-    NSArray *samples = [self getSamplesWithJS];
-    free(_loadedSamples);
-    _loadedSamples = calloc(PRELOADING_FRAMECOUNT, sizeof(short));
-    int i = 0;    
-    for (NSNumber *number in samples) {        
-        _loadedSamples[i++] = [number shortValue];
-    }
+    _loadedSamples = [self getSamplesWithJS];
 }
 
--(NSArray *)getSamplesWithJS {
-    NSString *js = [NSString stringWithFormat:@"document.get_samples(%d)", (NSInteger)PRELOADING_FRAMECOUNT];    
+-(NSString *)getSamplesWithJS {
+    NSDate *start = [NSDate date];
+    NSString *js = [NSString stringWithFormat:@"document.get_samples(%d)", (NSInteger)PRELOADING_FRAMECOUNT];
     NSString *json = [_hiddenWebView stringByEvaluatingJavaScriptFromString:js];
-    NSArray *bytes = [NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
-    return bytes;
+//    NSLog(@"web view %f", [[NSDate date] timeIntervalSinceDate:start]);
+//    
+//    NSArray *bytes = [NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+//    NSLog(@"json %f", [[NSDate date] timeIntervalSinceDate:start]);
+
+    return json;
 }
 
 -(void)ossanJamp:(float)height {
@@ -82,12 +90,6 @@
     CGRect frame = _ossanView.frame;
     frame.origin.y = -height;
     _ossanView.frame = frame;
-    if (height == 0) {
-        [_ossanView landing];
-    }
-    else {
-        [_ossanView changeImage];
-    }
 }
 
 - (void)viewDidUnload
@@ -97,8 +99,12 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+{    
     return YES;
+}
+
+-(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    _ossanView.ossansCount = UIInterfaceOrientationIsPortrait(toInterfaceOrientation) ? 1 : 3;
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -113,7 +119,7 @@
     });
 }
 
-static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) { 
+static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {     
     ViewController *self = (__bridge ViewController *)in;
 	static int phaseL = 0; 
 	static int phaseR = 0; 
@@ -126,8 +132,15 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
 	qb->mAudioDataByteSize = 4 * FRAMECOUNT; 
 	// 1 frame per packet, two shorts per frame = 4 * frames 
     short fftBuf[FRAMECOUNT];
-	for(int i = 0; i < ( FRAMECOUNT * 2 ) ; i+=2) {        
-        float value = fabs(self.playingSamples[i/2 + self.curretnPlayingIndex]);
+    int playingBuf[FRAMECOUNT];
+    NSScanner *scanner = [NSScanner scannerWithString:self.playingSamples];    
+
+    scanner.scanLocation = self.curretnPlayingIndex;
+    for (int i = 0; i < FRAMECOUNT; i++) {
+        [scanner scanInt:&playingBuf[i]];
+    }
+	for(int i = 0; i < ( FRAMECOUNT * 2 ) ; i+=2) {
+        float value = playingBuf[i/2];
 		sampleL = value / 256.0;//(amplitude * sin(pitch * FL * (float)phaseL));
 		sampleR = value / 256.0;//(amplitude * sin(pitch * FR * (float)phaseR));
 		short sampleIL = (int)(sampleL * 32767.0f); 
@@ -199,7 +212,6 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
         aqCallBack((__bridge void *)self, audioQueue, mBuffer);
     }
     if (err == noErr) err = AudioQueueStart(audioQueue, NULL);
-    if (err == noErr) CFRunLoopRun();
 }
 
 @end

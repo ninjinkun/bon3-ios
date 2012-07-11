@@ -33,6 +33,7 @@
 		26E2D5F215A0797200BD7F67 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26E2D5F115A0797200BD7F67 /* MediaPlayer.framework */; };
 		26E2D5F415A07B3A00BD7F67 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26E2D5F315A07B3A00BD7F67 /* AVFoundation.framework */; };
 		26E2D5F915A0AEF400BD7F67 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26E2D5F815A0AEF400BD7F67 /* CoreMedia.framework */; };
+		26F0E85315ABA3580025637D /* OssansBaseVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = 26F0E85215ABA3580025637D /* OssansBaseVIew.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,8 @@
 		26E2D5F115A0797200BD7F67 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		26E2D5F315A07B3A00BD7F67 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		26E2D5F815A0AEF400BD7F67 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		26F0E85115ABA3580025637D /* OssansBaseVIew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OssansBaseVIew.h; sourceTree = "<group>"; };
+		26F0E85215ABA3580025637D /* OssansBaseVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OssansBaseVIew.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,7 +138,6 @@
 		26E2D5BD15A077E800BD7F67 = {
 			isa = PBXGroup;
 			children = (
-				26BFDC1115A80220007F92F2 /* AudioToolbox.framework */,
 				26E2D5D215A077E800BD7F67 /* Bon3 */,
 				26E2D5CB15A077E800BD7F67 /* Frameworks */,
 				26BFDC0C15A7FD97007F92F2 /* Resources */,
@@ -156,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				26BFDB5315A7FB4E007F92F2 /* libxml2.dylib */,
+				26BFDC1115A80220007F92F2 /* AudioToolbox.framework */,
 				26BFDB5115A7FB44007F92F2 /* QuartzCore.framework */,
 				26E2D5F815A0AEF400BD7F67 /* CoreMedia.framework */,
 				26E2D5F315A07B3A00BD7F67 /* AVFoundation.framework */,
@@ -199,6 +202,8 @@
 			children = (
 				26BFDC1D15A82031007F92F2 /* OssanView.h */,
 				26BFDC1E15A82031007F92F2 /* OssanView.m */,
+				26F0E85115ABA3580025637D /* OssansBaseVIew.h */,
+				26F0E85215ABA3580025637D /* OssansBaseVIew.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -296,6 +301,7 @@
 				26E2D5DD15A077E800BD7F67 /* AppDelegate.m in Sources */,
 				26E2D5E615A077E800BD7F67 /* ViewController.m in Sources */,
 				26BFDC1F15A82031007F92F2 /* OssanView.m in Sources */,
+				26F0E85315ABA3580025637D /* OssansBaseVIew.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
