@@ -191,7 +191,7 @@ main = (sources) ->
       if t % 5512 == 0
         step_music()
 
-    JSON.stringify(cell)
+    cell.join("\n")
 
   document.reset = ->
     setTracks()

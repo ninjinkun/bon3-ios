@@ -240,7 +240,7 @@ main = function(sources) {
         step_music();
       }
     }
-    return JSON.stringify(cell);
+    return cell.join("\n");
   };
   return document.reset = function() {
     setTracks();
