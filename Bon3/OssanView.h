@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
-@interface OssanView : UIView
+@interface OssanView : CALayer
 -(void)changeImage;
 -(void)landing;
 @end

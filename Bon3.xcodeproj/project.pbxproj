@@ -34,6 +34,7 @@
 		26E2D5F415A07B3A00BD7F67 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26E2D5F315A07B3A00BD7F67 /* AVFoundation.framework */; };
 		26E2D5F915A0AEF400BD7F67 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26E2D5F815A0AEF400BD7F67 /* CoreMedia.framework */; };
 		26F0ED5D15AD3FC200B38B4C /* OssansBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26F0ED5C15AD3FC200B38B4C /* OssansBaseView.m */; };
+		26F0ED5F15AD42B100B38B4C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26F0ED5E15AD42B100B38B4C /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,7 @@
 		26E2D5F815A0AEF400BD7F67 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		26F0ED5B15AD3FC200B38B4C /* OssansBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OssansBaseView.h; sourceTree = "<group>"; };
 		26F0ED5C15AD3FC200B38B4C /* OssansBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OssansBaseView.m; sourceTree = "<group>"; };
+		26F0ED5E15AD42B100B38B4C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26F0ED5F15AD42B100B38B4C /* Security.framework in Frameworks */,
 				26BFDC1315A80220007F92F2 /* AudioToolbox.framework in Frameworks */,
 				26BFDB5215A7FB44007F92F2 /* QuartzCore.framework in Frameworks */,
 				26E2D5F915A0AEF400BD7F67 /* CoreMedia.framework in Frameworks */,
@@ -158,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				26BFDB5315A7FB4E007F92F2 /* libxml2.dylib */,
+				26F0ED5E15AD42B100B38B4C /* Security.framework */,
 				26BFDC1115A80220007F92F2 /* AudioToolbox.framework */,
 				26BFDB5115A7FB44007F92F2 /* QuartzCore.framework */,
 				26E2D5F815A0AEF400BD7F67 /* CoreMedia.framework */,

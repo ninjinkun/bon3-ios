@@ -17,30 +17,31 @@
 #import "OssansBaseView.h"
 #define BUFFER_SIZE 16384
 #define BUFFER_COUNT 3
-#define MUSIC_LENGTH_SECONDS (1)
+#define MUSIC_LENGTH_SECONDS ()
 #define SAMPLERATE 44100.0f
 #define ORIGINAL_SAMPLERATE 8000.0f
 #define FL ((2.0f * 3.14159f) / SAMPLERATE) 
 #define FR ((2.0f * 3.14159f) / SAMPLERATE) 
 #define FRAMECOUNT (1024)
-#define PRELOADING_FRAMECOUNT (MUSIC_LENGTH_SECONDS * SAMPLERATE)
+#define PRELOADING_FRAMECOUNT (1024)
 #define NUM_BUFFERS 3
 
 @interface ViewController ()
-@property (nonatomic) NSString *playingSamples;
-@property (nonatomic) NSString *loadedSamples;
+@property (nonatomic, strong) NSString *playingSamples;
+@property (nonatomic, strong) NSString *loadedSamples;
 @property (nonatomic) NSInteger curretnPlayingIndex;
+@property (nonatomic, strong) OssansBaseView *ossanView;;
 @end
 
 @implementation ViewController {
     UIWebView *_hiddenWebView;
-    AudioQueueRef audioQueue;
-    OssansBaseView *_ossanView;
+    AudioQueueRef audioQueue;    
 }
 @synthesize scrollView = _scrollView;
 @synthesize loadedSamples = _loadedSamples;
 @synthesize playingSamples = _playingSamples;
 @synthesize curretnPlayingIndex = _curretnPlayingIndex;
+@synthesize ossanView = _ossanView;
 
 - (void)viewDidLoad
 {
@@ -53,9 +54,17 @@
     _hiddenWebView = [[UIWebView alloc] init];
     _ossanView = [[OssansBaseView alloc] initWithFrame:self.view.bounds];    
     _ossanView.ossansCount = 1;
-//    UIPanGestureRecognizer *recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragged:)];
-//    [_ossanView addGestureRecognizer:recognizer];
+    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ossanTapped:)];
+    [_scrollView addGestureRecognizer:recognizer];
     [self.scrollView addSubview:_ossanView];    
+}
+
+-(void)ossanTapped:(UITapGestureRecognizer *)sender {
+    float red = arc4random() % 2;
+    float green = arc4random() % 2;
+    float blue = arc4random() % 2;
+    red = red + green + blue >= 3 ? 0 : red; 
+    _ossanView.ossanColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
 }
 
 //-(void)dragged:(UIPanGestureRecognizer *)sender {
@@ -76,6 +85,7 @@
 -(NSString *)getSamplesWithJS {
     NSDate *start = [NSDate date];
     NSString *js = [NSString stringWithFormat:@"document.get_samples(%d)", (NSInteger)PRELOADING_FRAMECOUNT];
+
     NSString *json = [_hiddenWebView stringByEvaluatingJavaScriptFromString:js];
 //    NSLog(@"web view %f", [[NSDate date] timeIntervalSinceDate:start]);
 //    
@@ -85,11 +95,8 @@
     return json;
 }
 
--(void)ossanJamp:(float)height {
-    height = height > 20 ? height : 0;
-    CGRect frame = _ossanView.frame;
-    frame.origin.y = -height;
-    _ossanView.frame = frame;
+-(void)ossanJamp:(NSArray *)ossanValues {
+    _ossanView.ossanHeights = ossanValues;
 }
 
 - (void)viewDidUnload
@@ -140,7 +147,7 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
         [scanner scanInt:&playingBuf[i]];
     }
 	for(int i = 0; i < ( FRAMECOUNT * 2 ) ; i+=2) {
-        float value = playingBuf[i/2];
+        float value = fabs(playingBuf[i/2]);
 		sampleL = value / 256.0;//(amplitude * sin(pitch * FL * (float)phaseL));
 		sampleR = value / 256.0;//(amplitude * sin(pitch * FR * (float)phaseR));
 		short sampleIL = (int)(sampleL * 32767.0f); 
@@ -165,23 +172,30 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
     vDSP_destroy_fftsetup(fftSetup);    
     int spectrum[4] = {0, 0, 0, 0};
     
-    for (int i=0; i< FRAMECOUNT / 2; i++) {
+    for (int i = 0; i < FRAMECOUNT / 2; i++) {
         float real = splitComplex.realp[i];
         float imag = splitComplex.imagp[i];
         float distance = sqrt(real*real + imag*imag);
-        int index = i / (FRAMECOUNT / 2 / 4);
+        int index = i / (FRAMECOUNT / 2 /  self.ossanView.ossansCount);
         spectrum[index] += distance;
-    }    
-
-    [self ossanJamp:spectrum[1] / 80000];            
-
+    }   
+    
+    {
+        NSMutableArray *ossanValues = [NSMutableArray array];
+        for (int i = 0; i < self.ossanView.ossansCount; i++) {
+            [ossanValues addObject:[NSNumber numberWithInt:spectrum[i]]];
+        }        
+        [self ossanJamp:ossanValues];
+    }
     
     free(splitComplex.realp);
     free(splitComplex.imagp);
-    if (self.curretnPlayingIndex >= PRELOADING_FRAMECOUNT) {
+    if (self.curretnPlayingIndex >= PRELOADING_FRAMECOUNT) {        
         self.playingSamples = self.loadedSamples;  // 曲が入れ替わる
         self.curretnPlayingIndex = 0;
-        [self loadSamples]; // 次の曲の準備
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self loadSamples]; // 次の曲の準備
+        });
     }    
 } 
 
