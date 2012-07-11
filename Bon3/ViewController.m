@@ -31,6 +31,7 @@
 @property (nonatomic, strong) NSString *loadedSamples;
 @property (nonatomic) NSInteger curretnPlayingIndex;
 @property (nonatomic, strong) OssansBaseView *ossanView;;
+@property (nonatomic, strong) UIView *groundView;
 @end
 
 @implementation ViewController {
@@ -42,6 +43,7 @@
 @synthesize playingSamples = _playingSamples;
 @synthesize curretnPlayingIndex = _curretnPlayingIndex;
 @synthesize ossanView = _ossanView;
+@synthesize groundView = _groundView;
 
 - (void)viewDidLoad
 {
@@ -52,8 +54,14 @@
 
 -(void)setUpViews {
     _hiddenWebView = [[UIWebView alloc] init];
-    _ossanView = [[OssansBaseView alloc] initWithFrame:self.view.bounds];    
+    
+    _groundView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, self.view.bounds.size.width, 40)];
+    _groundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+    [_scrollView addSubview:_groundView];
+
+    _ossanView = [[OssansBaseView alloc] initWithFrame:CGRectMake(0, -40, self.view.frame.size.width, self.view.frame.size.height)];    
     _ossanView.ossansCount = 1;
+    _groundView.backgroundColor = _ossanView.ossanColor = [UIColor greenColor];
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ossanTapped:)];
     [_scrollView addGestureRecognizer:recognizer];
     [self.scrollView addSubview:_ossanView];    
@@ -63,15 +71,10 @@
     float red = arc4random() % 2;
     float green = arc4random() % 2;
     float blue = arc4random() % 2;
-    red = red + green + blue >= 3 ? 0 : red; 
-    _ossanView.ossanColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
+    red = red + green + blue >= 3 ? 0 : red;    
+    _groundView.backgroundColor = _ossanView.ossanColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
+    [self loadSamples];
 }
-
-//-(void)dragged:(UIPanGestureRecognizer *)sender {
-//    CGRect frame = sender.view.frame;
-//    frame.origin = [sender translationInView:sender.view];
-//    sender.view.frame = frame;
-//}
 
 -(void)loadHtmlFile:(NSString *)name {
     NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:@"html"];
@@ -97,6 +100,20 @@
 
 -(void)ossanJamp:(NSArray *)ossanValues {
     _ossanView.ossanHeights = ossanValues;
+    CGRect frame =  _ossanView.frame;    
+
+    float groundHeight = 40.0; 
+    for (NSNumber *num in ossanValues) {
+        groundHeight += [num floatValue];
+    }
+    groundHeight /= 1000000;
+    groundHeight = groundHeight > 10 + 40 ? groundHeight : 40;
+    frame.origin.y = -groundHeight;
+    _ossanView.frame = frame;
+    frame = _groundView.frame;
+    frame.size.height = groundHeight;
+    frame.origin.y = self.view.bounds.size.height - groundHeight;
+    _groundView.frame = frame;
 }
 
 - (void)viewDidUnload
@@ -111,7 +128,7 @@
 }
 
 -(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    _ossanView.ossansCount = UIInterfaceOrientationIsPortrait(toInterfaceOrientation) ? 1 : 3;
+    _ossanView.ossansCount = UIInterfaceOrientationIsPortrait(toInterfaceOrientation) ? 1 : 4;
 }
 
 -(void)viewDidAppear:(BOOL)animated {
