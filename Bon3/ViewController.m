@@ -73,12 +73,18 @@
     float blue = arc4random() % 2;
     red = red + green + blue >= 3 ? 0 : red;    
     _groundView.backgroundColor = _ossanView.ossanColor = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
+    [self nextTrack];
     [self loadSamples];
 }
 
 -(void)loadHtmlFile:(NSString *)name {
     NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:@"html"];
     [_hiddenWebView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:path]]];
+}
+
+-(void)nextTrack {
+     NSString *js = @"document.reset()";
+    [_hiddenWebView stringByEvaluatingJavaScriptFromString:js];
 }
 
 -(void)loadSamples {
