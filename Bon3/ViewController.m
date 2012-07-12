@@ -26,6 +26,8 @@
 #define PRELOADING_FRAMECOUNT (1024)
 #define NUM_BUFFERS 3
 
+#define GROUND_HEIGHT 40
+
 @interface ViewController ()
 @property (nonatomic, strong) NSString *playingSamples;
 @property (nonatomic, strong) NSString *loadedSamples;
@@ -38,7 +40,6 @@
     UIWebView *_hiddenWebView;
     AudioQueueRef audioQueue;    
 }
-@synthesize scrollView = _scrollView;
 @synthesize loadedSamples = _loadedSamples;
 @synthesize playingSamples = _playingSamples;
 @synthesize curretnPlayingIndex = _curretnPlayingIndex;
@@ -55,16 +56,16 @@
 -(void)setUpViews {
     _hiddenWebView = [[UIWebView alloc] init];
     
-    _groundView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, self.view.bounds.size.width, 40)];
+    _groundView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, self.view.bounds.size.width, GROUND_HEIGHT)];
     _groundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-    [_scrollView addSubview:_groundView];
+    [self.view addSubview:_groundView];
 
-    _ossanView = [[OssansBaseView alloc] initWithFrame:CGRectMake(0, -40, self.view.frame.size.width, self.view.frame.size.height)];    
+    _ossanView = [[OssansBaseView alloc] initWithFrame:CGRectMake(0, -GROUND_HEIGHT, self.view.frame.size.width, self.view.frame.size.height)];    
     _ossanView.ossansCount = 1;
     _groundView.backgroundColor = _ossanView.ossanColor = [UIColor greenColor];
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ossanTapped:)];
-    [_scrollView addGestureRecognizer:recognizer];
-    [self.scrollView addSubview:_ossanView];    
+    [self.view addGestureRecognizer:recognizer];
+    [self.view addSubview:_ossanView];    
 }
 
 -(void)ossanTapped:(UITapGestureRecognizer *)sender {
@@ -102,12 +103,12 @@
     _ossanView.ossanHeights = ossanValues;
     CGRect frame =  _ossanView.frame;    
 
-    float groundHeight = 40.0; 
+    float groundHeight = GROUND_HEIGHT; 
     for (NSNumber *num in ossanValues) {
         groundHeight += [num floatValue];
     }
     groundHeight /= 1000000;
-    groundHeight = groundHeight > 10 + 40 ? groundHeight : 40;
+    groundHeight = groundHeight > 10 + GROUND_HEIGHT ? groundHeight : GROUND_HEIGHT;
     frame.origin.y = -groundHeight;
     _ossanView.frame = frame;
     frame = _groundView.frame;

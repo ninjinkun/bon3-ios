@@ -34,7 +34,6 @@
 		26E2D5F415A07B3A00BD7F67 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26E2D5F315A07B3A00BD7F67 /* AVFoundation.framework */; };
 		26E2D5F915A0AEF400BD7F67 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26E2D5F815A0AEF400BD7F67 /* CoreMedia.framework */; };
 		26F0ED5D15AD3FC200B38B4C /* OssansBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26F0ED5C15AD3FC200B38B4C /* OssansBaseView.m */; };
-		26F0ED5F15AD42B100B38B4C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26F0ED5E15AD42B100B38B4C /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,7 +80,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26F0ED5F15AD42B100B38B4C /* Security.framework in Frameworks */,
 				26BFDC1315A80220007F92F2 /* AudioToolbox.framework in Frameworks */,
 				26BFDB5215A7FB44007F92F2 /* QuartzCore.framework in Frameworks */,
 				26E2D5F915A0AEF400BD7F67 /* CoreMedia.framework in Frameworks */,
@@ -389,6 +387,8 @@
 		26E2D5EA15A077E800BD7F67 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Satoshi Asano (NYXTR2448A)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Satoshi Asano (NYXTR2448A)";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bon3/Bon3-Prefix.pch";
@@ -396,6 +396,8 @@
 				INFOPLIST_FILE = "Bon3/Bon3-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "DFD7593F-4FE3-42E1-A3F3-6167F831198A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DFD7593F-4FE3-42E1-A3F3-6167F831198A";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -403,12 +405,14 @@
 		26E2D5EB15A077E800BD7F67 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Satoshi Asano (NYXTR2448A)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bon3/Bon3-Prefix.pch";
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = "Bon3/Bon3-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "DFD7593F-4FE3-42E1-A3F3-6167F831198A";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
