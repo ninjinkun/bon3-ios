@@ -13,8 +13,10 @@
 #import <CoreMedia/CoreMedia.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <AudioUnit/AudioUnit.h>
+#import <QuartzCore/QuartzCore.h>
 #import "OssanView.h"
 #import "OssansBaseView.h"
+#import "InfoViewController.h"
 #define BUFFER_SIZE 16384
 #define BUFFER_COUNT 3
 #define MUSIC_LENGTH_SECONDS ()
@@ -45,6 +47,20 @@
 @synthesize curretnPlayingIndex = _curretnPlayingIndex;
 @synthesize ossanView = _ossanView;
 @synthesize groundView = _groundView;
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    InfoViewController *viewController = (InfoViewController *)segue.destinationViewController;
+    viewController.screenImage = [self captureScreen];
+}
+
+-(UIImage *)captureScreen {
+ 	UIImage *capture; 	
+	UIGraphicsBeginImageContext(self.view.frame.size);
+	[self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+	capture = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+	return capture;   
+}
 
 - (void)viewDidLoad
 {

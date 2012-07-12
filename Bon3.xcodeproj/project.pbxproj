@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2622A9A715AEED4B001DAB85 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2622A9A615AEED4B001DAB85 /* Twitter.framework */; };
+		2622A9AB15AEED81001DAB85 /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2622A9AA15AEED81001DAB85 /* InfoViewController.m */; };
 		26BFDB5215A7FB44007F92F2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26BFDB5115A7FB44007F92F2 /* QuartzCore.framework */; };
 		26BFDC1315A80220007F92F2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26BFDC1115A80220007F92F2 /* AudioToolbox.framework */; };
 		26BFDC1715A80468007F92F2 /* image4-color.svg in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC1515A80468007F92F2 /* image4-color.svg */; };
@@ -37,8 +39,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2622A9A615AEED4B001DAB85 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		2622A9A915AEED81001DAB85 /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
+		2622A9AA15AEED81001DAB85 /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
 		26BFDB5115A7FB44007F92F2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		26BFDB5315A7FB4E007F92F2 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		26BFDC1115A80220007F92F2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		26BFDC1515A80468007F92F2 /* image4-color.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "image4-color.svg"; path = "Images/image4-color.svg"; sourceTree = "<group>"; };
 		26BFDC1615A80468007F92F2 /* image4.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = image4.svg; path = Images/image4.svg; sourceTree = "<group>"; };
@@ -80,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2622A9A715AEED4B001DAB85 /* Twitter.framework in Frameworks */,
 				26BFDC1315A80220007F92F2 /* AudioToolbox.framework in Frameworks */,
 				26BFDB5215A7FB44007F92F2 /* QuartzCore.framework in Frameworks */,
 				26E2D5F915A0AEF400BD7F67 /* CoreMedia.framework in Frameworks */,
@@ -139,6 +144,7 @@
 		26E2D5BD15A077E800BD7F67 = {
 			isa = PBXGroup;
 			children = (
+				2622A9A615AEED4B001DAB85 /* Twitter.framework */,
 				26E2D5D215A077E800BD7F67 /* Bon3 */,
 				26E2D5CB15A077E800BD7F67 /* Frameworks */,
 				26BFDC0C15A7FD97007F92F2 /* Resources */,
@@ -158,7 +164,6 @@
 		26E2D5CB15A077E800BD7F67 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				26BFDB5315A7FB4E007F92F2 /* libxml2.dylib */,
 				26F0ED5E15AD42B100B38B4C /* Security.framework */,
 				26BFDC1115A80220007F92F2 /* AudioToolbox.framework */,
 				26BFDB5115A7FB44007F92F2 /* QuartzCore.framework */,
@@ -215,6 +220,8 @@
 			children = (
 				26E2D5E415A077E800BD7F67 /* ViewController.h */,
 				26E2D5E515A077E800BD7F67 /* ViewController.m */,
+				2622A9A915AEED81001DAB85 /* InfoViewController.h */,
+				2622A9AA15AEED81001DAB85 /* InfoViewController.m */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -304,6 +311,7 @@
 				26E2D5E615A077E800BD7F67 /* ViewController.m in Sources */,
 				26BFDC1F15A82031007F92F2 /* OssanView.m in Sources */,
 				26F0ED5D15AD3FC200B38B4C /* OssansBaseView.m in Sources */,
+				2622A9AB15AEED81001DAB85 /* InfoViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
