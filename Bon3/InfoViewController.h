@@ -10,4 +10,5 @@
 
 @interface InfoViewController : UIViewController
 @property (nonatomic, strong) UIImage *screenImage;
+@property (nonatomic, strong) IBOutlet UIButton *tweetButton;
 @end

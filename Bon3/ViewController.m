@@ -50,6 +50,7 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     InfoViewController *viewController = (InfoViewController *)segue.destinationViewController;
+    viewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     viewController.screenImage = [self captureScreen];
 }
 
@@ -66,7 +67,15 @@
 {
     [super viewDidLoad];
     [self setUpViews];
-    [self loadHtmlFile:@"index"];    
+    [self loadHtmlFile:@"index"];
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        self.curretnPlayingIndex = 0;
+        [self loadSamples];
+        self.playingSamples = self.loadedSamples;        
+        [self setupAudioQueue];
+    });
 }
 
 -(void)setUpViews {
@@ -74,14 +83,14 @@
     
     _groundView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, self.view.bounds.size.width, GROUND_HEIGHT)];
     _groundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-    [self.view addSubview:_groundView];
+    [self.view insertSubview:_groundView atIndex:0];
 
     _ossanView = [[OssansBaseView alloc] initWithFrame:CGRectMake(0, -GROUND_HEIGHT, self.view.frame.size.width, self.view.frame.size.height)];    
     _ossanView.ossansCount = 1;
     _groundView.backgroundColor = _ossanView.ossanColor = [UIColor greenColor];
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ossanTapped:)];
     [self.view addGestureRecognizer:recognizer];
-    [self.view addSubview:_ossanView];    
+    [self.view insertSubview:_ossanView atIndex:0];
 }
 
 -(void)ossanTapped:(UITapGestureRecognizer *)sender {
@@ -156,14 +165,6 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    double delayInSeconds = 2.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        self.curretnPlayingIndex = 0;
-        [self loadSamples];
-        self.playingSamples = self.loadedSamples;        
-        [self setupAudioQueue];
-    });
 }
 
 static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {     
