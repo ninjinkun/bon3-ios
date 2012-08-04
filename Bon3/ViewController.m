@@ -124,9 +124,6 @@
 
     NSString *json = [_hiddenWebView stringByEvaluatingJavaScriptFromString:js];
 //    NSLog(@"web view %f", [[NSDate date] timeIntervalSinceDate:start]);
-//    
-//    NSArray *bytes = [NSJSONSerialization JSONObjectWithData:[json dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
-//    NSLog(@"json %f", [[NSDate date] timeIntervalSinceDate:start]);
 
     return json;
 }
@@ -175,9 +172,18 @@
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[MixpanelAPI sharedAPI] track:@"Ossan Page Shown"];
+    // リモコンを操作できないように
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    [self becomeFirstResponder];
 }
 
-static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {     
+-(void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+    [self resignFirstResponder];
+}
+
+static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
     ViewController *self = (__bridge ViewController *)in;
 	static int phaseL = 0; 
 	static int phaseR = 0; 
@@ -275,6 +281,10 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
         aqCallBack((__bridge void *)self, audioQueue, mBuffer);
     }
     if (err == noErr) err = AudioQueueStart(audioQueue, NULL);
+}
+
+-(void)stopAudioQueue {
+    AudioQueueStop(audioQueue, YES);
 }
 
 @end
