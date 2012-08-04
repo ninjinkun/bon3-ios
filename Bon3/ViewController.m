@@ -42,11 +42,6 @@
     UIWebView *_hiddenWebView;
     AudioQueueRef audioQueue;    
 }
-@synthesize loadedSamples = _loadedSamples;
-@synthesize playingSamples = _playingSamples;
-@synthesize curretnPlayingIndex = _curretnPlayingIndex;
-@synthesize ossanView = _ossanView;
-@synthesize groundView = _groundView;
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     InfoViewController *viewController = (InfoViewController *)segue.destinationViewController;
@@ -118,7 +113,7 @@
 }
 
 -(NSString *)getSamplesWithJS {
-    NSDate *start = [NSDate date];
+//    NSDate *start = [NSDate date];
     NSString *js = [NSString stringWithFormat:@"document.get_samples(%d)", (NSInteger)PRELOADING_FRAMECOUNT];
 
     NSString *json = [_hiddenWebView stringByEvaluatingJavaScriptFromString:js];
@@ -224,7 +219,7 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
     {
         NSMutableArray *ossanValues = [NSMutableArray array];
         for (int i = 0; i < self.ossanView.ossansCount; i++) {
-            [ossanValues addObject:[NSNumber numberWithInt:spectrum[i]]];
+            [ossanValues addObject:@(spectrum[i])];
         }        
         [self ossanJamp:ossanValues];
     }

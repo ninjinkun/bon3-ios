@@ -8,15 +8,8 @@
 
 #import "InfoViewController.h"
 #import <Twitter/Twitter.h>
-@interface InfoViewController ()
-
-@end
 
 @implementation InfoViewController
-
-@synthesize screenImage = _screenImage;
-@synthesize tweetButton = _tweetButton;
-
 -(IBAction)twitterButtonPushed:(id)sender {        
     TWTweetComposeViewController *twitterViewController = [[TWTweetComposeViewController alloc] init];
     if (_screenImage) 

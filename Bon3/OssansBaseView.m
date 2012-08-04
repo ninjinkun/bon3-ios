@@ -12,9 +12,7 @@
 @implementation OssansBaseView {
     NSArray *_ossanViews;    
 }
-@synthesize ossansCount = _ossansCount;
-@synthesize ossanHeights = _ossanHeights;
-@synthesize ossanColor = _ossanColor;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
