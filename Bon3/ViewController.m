@@ -79,7 +79,7 @@
 -(void)setUpViews {
     _hiddenWebView = [[UIWebView alloc] init];
     
-    _groundView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, self.view.bounds.size.width, [self groundHeight])];
+    _groundView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - [self groundHeight], self.view.bounds.size.width, [self groundHeight])];
     _groundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     [self.view insertSubview:_groundView atIndex:0];
 
