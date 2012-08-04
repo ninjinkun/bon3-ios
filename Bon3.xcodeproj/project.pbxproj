@@ -187,12 +187,6 @@
 		26BFDC1C15A81F28007F92F2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
-				26BFDC2415A820A9007F92F2 /* appimage1.png */,
-				26BFDC2515A820A9007F92F2 /* appimage2.png */,
-				26BFDC2615A820A9007F92F2 /* appimage3.png */,
-				26BFDC2715A820A9007F92F2 /* appimage4.png */,
-				26BFDC2815A820A9007F92F2 /* appimage5.png */,
 				4294E86615CD10BF00DCF91C /* info-tweet@2x~ipad.png */,
 				4294E86715CD10BF00DCF91C /* info-tweet@2x~iphone.png */,
 				4294E86815CD10BF00DCF91C /* info-tweet~ipad.png */,
@@ -201,8 +195,6 @@
 				4294E86B15CD10BF00DCF91C /* info@2x~iphone.png */,
 				4294E86C15CD10BF00DCF91C /* info~ipad.png */,
 				4294E86D15CD10BF00DCF91C /* info~iphone.png */,
-				26BFDC2915A820A9007F92F2 /* appimage6.png */,
-=======
 				26ED3DF415CCF88300890E91 /* image1@2x~ipad.png */,
 				26ED3DF515CCF88300890E91 /* image1@2x~iphone.png */,
 				26ED3DF615CCF88300890E91 /* image1~ipad.png */,
@@ -221,7 +213,6 @@
 				26ED3E0315CCF88300890E91 /* image6@2x~ipad.png */,
 				26ED3E0415CCF88300890E91 /* image6@2x~iphone.png */,
 				26ED3E0515CCF88300890E91 /* image6~ipad.png */,
->>>>>>> ac754aabc3fb669575c1c2089d462eeadb516af0
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -434,7 +425,6 @@
 				26BFDC3415A823FA007F92F2 /* index.html in Resources */,
 				26BFDC3615A8256D007F92F2 /* music.js in Resources */,
 				2622A9AE15AEF3D6001DAB85 /* Localizable.strings in Resources */,
-<<<<<<< HEAD
 				4294E86E15CD10BF00DCF91C /* info-tweet@2x~ipad.png in Resources */,
 				4294E86F15CD10BF00DCF91C /* info-tweet@2x~iphone.png in Resources */,
 				4294E87015CD10BF00DCF91C /* info-tweet~ipad.png in Resources */,
@@ -443,7 +433,6 @@
 				4294E87315CD10BF00DCF91C /* info@2x~iphone.png in Resources */,
 				4294E87415CD10BF00DCF91C /* info~ipad.png in Resources */,
 				4294E87515CD10BF00DCF91C /* info~iphone.png in Resources */,
-=======
 				26ED3E0615CCF88300890E91 /* image1@2x~ipad.png in Resources */,
 				26ED3E0715CCF88300890E91 /* image1@2x~iphone.png in Resources */,
 				26ED3E0815CCF88300890E91 /* image1~ipad.png in Resources */,
@@ -466,7 +455,6 @@
 				26ED3E1B15CCF97100890E91 /* appicon@2x~ipad.png in Resources */,
 				26ED3E1D15CCF98500890E91 /* appicon~iphone.png in Resources */,
 				26ED3E1F15CCF98C00890E91 /* appicon@2x~iphone.png in Resources */,
->>>>>>> ac754aabc3fb669575c1c2089d462eeadb516af0
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
