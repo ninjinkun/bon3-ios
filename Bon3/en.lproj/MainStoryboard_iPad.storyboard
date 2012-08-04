@@ -26,7 +26,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="BQa-8L-ZDe" kind="modal" id="98Q-qR-VnK"/>
+                                    <action selector="twitterButtonPushed:" destination="2" eventType="touchUpInside" id="UXs-2V-oDS"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -134,6 +134,10 @@
         </class>
         <class className="ViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="twitterButtonPushed:"/>
+                <relationship kind="outlet" name="_tweetButton" candidateClass="UIButton"/>
+            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

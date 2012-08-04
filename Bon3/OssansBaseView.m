@@ -45,7 +45,7 @@
         frame.origin.y = self.frame.size.height - height;
         ossan.frame = frame;
 //        NSLog(@"ossan content %@", NSStringFromCGRect(ossan.contentsRect));
-//        NSLog(@"ossan frame %@",  NSStringFromCGRect(frame));        
+//        NSLog(@"ossan frame %@",  NSStringFromCGRect(frame));
     }
 }
 

@@ -17,6 +17,7 @@
 #import "OssansBaseView.h"
 #import "InfoViewController.h"
 #import "MixpanelAPI.h"
+#import <Twitter/Twitter.h>
 
 #define BUFFER_SIZE 16384
 #define BUFFER_COUNT 3
@@ -39,7 +40,8 @@
 
 @implementation ViewController {
     UIWebView *_hiddenWebView;
-    AudioQueueRef audioQueue;    
+    AudioQueueRef _audioQueue;    
+    IBOutlet UIButton *_tweetButton;
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -49,12 +51,33 @@
 }
 
 -(UIImage *)captureScreen {
- 	UIImage *capture; 	
-	UIGraphicsBeginImageContext(self.view.frame.size);
+ 	UIImage *capture;
+    NSLog(@"frame %@", NSStringFromCGSize(self.view.bounds.size));
+	UIGraphicsBeginImageContext(self.view.bounds.size);
 	[self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
 	capture = UIGraphicsGetImageFromCurrentImageContext();
 	UIGraphicsEndImageContext();
 	return capture;   
+}
+
+-(IBAction)twitterButtonPushed:(id)sender {
+    [[MixpanelAPI sharedAPI] track:@"Tweet Button Tapped"];
+    _tweetButton.hidden = YES;
+    TWTweetComposeViewController *twitterViewController = [[TWTweetComposeViewController alloc] init];
+    
+    [twitterViewController addImage:[self captureScreen]];
+    [twitterViewController setInitialText:NSLocalizedString(@"Dancing with #bon3", @"Twieet Text")];
+    [twitterViewController addURL:[NSURL URLWithString:@"http://higashi-dance-network.appspot.com/bon3/"]];
+    [twitterViewController setCompletionHandler:^(TWTweetComposeViewControllerResult result){
+        if (result == TWTweetComposeViewControllerResultDone)
+            [[MixpanelAPI sharedAPI] track:@"Tweeted"];
+        else
+            [[MixpanelAPI sharedAPI] track:@"Tweet Canceled"];
+        
+        _tweetButton.hidden = NO;
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [self presentViewController:twitterViewController animated:YES completion:nil];
 }
 
 - (void)viewDidLoad
@@ -150,6 +173,7 @@
 
 - (void)viewDidUnload
 {
+    _tweetButton = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -271,20 +295,20 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
     // Create a new output AudioQueue for the device.
     err = AudioQueueNewOutput(&deviceFormat, aqCallBack, (__bridge void *)self,
                               CFRunLoopGetCurrent(), kCFRunLoopCommonModes,
-                              0, &audioQueue);
+                              0, &_audioQueue);
     // Allocate buffers for the AudioQueue, and pre-fill them.
 
     for (int i = 0; i < NUM_BUFFERS; ++i) {
         AudioQueueBufferRef mBuffer;
-        err = AudioQueueAllocateBuffer(audioQueue, FRAMECOUNT * deviceFormat.mBytesPerFrame, &mBuffer);
+        err = AudioQueueAllocateBuffer(_audioQueue, FRAMECOUNT * deviceFormat.mBytesPerFrame, &mBuffer);
         if (err != noErr) break;
-        aqCallBack((__bridge void *)self, audioQueue, mBuffer);
+        aqCallBack((__bridge void *)self, _audioQueue, mBuffer);
     }
-    if (err == noErr) err = AudioQueueStart(audioQueue, NULL);
+    if (err == noErr) err = AudioQueueStart(_audioQueue, NULL);
 }
 
 -(void)stopAudioQueue {
-    AudioQueueStop(audioQueue, YES);
+    AudioQueueStop(_audioQueue, YES);
 }
 
 @end
