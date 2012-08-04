@@ -26,12 +26,15 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="bL1-6F-QCW" kind="modal" id="HFn-gV-sA1"/>
+                                    <action selector="twitterButtonPushed:" destination="2" eventType="touchUpInside" id="5u2-fQ-ihN"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="_tweetButton" destination="1OX-MZ-bkZ" id="2pL-GA-dag"/>
+                    </connections>
                 </viewController>
             </objects>
         </scene>
@@ -123,17 +126,14 @@
         <class className="InfoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/InfoViewController.h"/>
             <relationships>
-                <relationship kind="action" name="aboutUsButtonPushed:"/>
-                <relationship kind="action" name="closeButtonPushed:"/>
-                <relationship kind="action" name="twitterButtonPushed:"/>
-                <relationship kind="outlet" name="_aboutUsButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="_titleLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="_tweetButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="tweetButton" candidateClass="UIButton"/>
             </relationships>
         </class>
         <class className="ViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="twitterButtonPushed:"/>
+            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

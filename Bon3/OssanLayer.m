@@ -23,6 +23,7 @@
                         [UIImage imageNamed:@"image5"],
                         [UIImage imageNamed:@"image6"]];
         self.contents = (__bridge id)_landingOssanImage.CGImage;
+        self.masksToBounds = YES;
     }
     return self;
 }
