@@ -10,7 +10,12 @@
 #import "MixpanelAPI.h"
 #import <Twitter/Twitter.h>
 
-@implementation InfoViewController
+@implementation InfoViewController {    
+    IBOutlet UIButton *_tweetButton;
+    IBOutlet UIButton *_aboutUsButton;
+    IBOutlet UILabel *_titleLabel;
+}
+
 -(IBAction)twitterButtonPushed:(id)sender {
     [[MixpanelAPI sharedAPI] track:@"Tweet Button Tapped"];    
     TWTweetComposeViewController *twitterViewController = [[TWTweetComposeViewController alloc] init];
@@ -42,10 +47,20 @@
 {
     [super viewDidLoad];
     _tweetButton.enabled = [TWTweetComposeViewController canSendTweet];
+    [self setUpLocalizedText];
+}
+
+-(void)setUpLocalizedText {
+    _titleLabel.text = NSLocalizedString(@"Tweet bon3", @"Tweet bon3");
+    [_tweetButton setTitle:NSLocalizedString(@"Tweet bon3", @"Tweet bon3") forState:UIControlStateNormal];
+    [_aboutUsButton setTitle:NSLocalizedString(@"Higashi Dance Network", @"Higashi Dance Network") forState:UIControlStateNormal];
 }
 
 - (void)viewDidUnload
 {
+    _aboutUsButton = nil;
+    _tweetButton = nil;
+    _titleLabel = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
