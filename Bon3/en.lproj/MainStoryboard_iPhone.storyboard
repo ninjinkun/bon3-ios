@@ -48,12 +48,12 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="g8Z-FZ-Cgv">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="headTruncation" id="g8Z-FZ-Cgv">
                                 <rect key="frame" x="7" y="288" width="308" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
-                                <inset key="titleEdgeInsets" minX="80" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="bon3をTweetする" backgroundImage="info-tweet~iphone.png">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                                <state key="normal" title="bon3をTweetする" image="info-tweeticon~iphone.png" backgroundImage="info-tweet~iphone.png">
                                     <color key="titleColor" red="0.0" green="0.67450980390000004" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -115,6 +115,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="info-tweeticon~iphone.png" width="39" height="32"/>
         <image name="info-tweet~iphone.png" width="308" height="70"/>
         <image name="info~iphone.png" width="320" height="480"/>
     </resources>
