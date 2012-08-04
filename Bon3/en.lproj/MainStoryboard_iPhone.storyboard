@@ -48,10 +48,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="g8Z-FZ-Cgv">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="g8Z-FZ-Cgv">
                                 <rect key="frame" x="7" y="288" width="308" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                                <inset key="titleEdgeInsets" minX="80" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" title="bon3をTweetする" backgroundImage="info-tweet~iphone.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -93,10 +94,10 @@
                                     <action selector="aboutUsButtonPushed:" destination="bL1-6F-QCW" eventType="touchUpInside" id="Mfb-Mv-8Kk"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="音に合わせて踊ります" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="3Jn-wh-2ji">
-                                <rect key="frame" x="44" y="86" width="233" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="音に合わせて踊ります" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="5j9-bO-c2D">
+                                <rect key="frame" x="76" y="79" width="170" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -105,13 +106,12 @@
                     </view>
                     <connections>
                         <outlet property="_aboutUsButton" destination="4gw-2I-Ddd" id="Tnr-1i-Lpm"/>
-                        <outlet property="_titleLabel" destination="3Jn-wh-2ji" id="fQ7-rV-iil"/>
+                        <outlet property="_titleLabel" destination="5j9-bO-c2D" id="LGJ-ni-Zyd"/>
                         <outlet property="_tweetButton" destination="g8Z-FZ-Cgv" id="63z-yv-3Og"/>
-                        <outlet property="aboutUsLabel" destination="4gw-2I-Ddd" id="td9-XQ-wbO"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="375" y="9"/>
+            <point key="canvasLocation" x="703" y="-191"/>
         </scene>
     </scenes>
     <resources>
