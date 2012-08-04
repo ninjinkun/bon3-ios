@@ -14,7 +14,6 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <AudioUnit/AudioUnit.h>
 #import <QuartzCore/QuartzCore.h>
-#import "OssanView.h"
 #import "OssansBaseView.h"
 #import "InfoViewController.h"
 #define BUFFER_SIZE 16384
@@ -134,7 +133,8 @@
         groundHeight += [num floatValue];
     }
     groundHeight /= 1000000;
-    groundHeight = groundHeight > 10 + GROUND_HEIGHT ? groundHeight : GROUND_HEIGHT;
+    groundHeight *= 2; // 2倍くらい動いた方が良い
+    groundHeight = groundHeight > 20 + GROUND_HEIGHT ? groundHeight : GROUND_HEIGHT;
     frame.origin.y = -groundHeight;
     _ossanView.frame = frame;
     frame = _groundView.frame;
@@ -156,10 +156,6 @@
 
 -(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     _ossanView.ossansCount = UIInterfaceOrientationIsPortrait(toInterfaceOrientation) ? 1 : 4;
-}
-
--(void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
 }
 
 static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {     
@@ -234,8 +230,6 @@ static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {
         });
     }    
 } 
-
-
 
 -(void)setupAudioQueue {
     OSStatus err = noErr;
