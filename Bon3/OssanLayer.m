@@ -16,12 +16,12 @@
 {
     self = [super init];
     if (self) {
-        _landingOssanImage = [UIImage imageNamed:@"appimage1"];
-        _ossanImages = @[[UIImage imageNamed:@"appimage2"], 
-                        [UIImage imageNamed:@"appimage3"],
-                        [UIImage imageNamed:@"appimage4"],
-                        [UIImage imageNamed:@"appimage5"],
-                        [UIImage imageNamed:@"appimage6"]];
+        _landingOssanImage = [UIImage imageNamed:@"image1"];
+        _ossanImages = @[[UIImage imageNamed:@"image2"],
+                        [UIImage imageNamed:@"image3"],
+                        [UIImage imageNamed:@"image4"],
+                        [UIImage imageNamed:@"image5"],
+                        [UIImage imageNamed:@"image6"]];
         self.contents = (__bridge id)_landingOssanImage.CGImage;
     }
     return self;

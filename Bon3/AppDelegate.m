@@ -7,14 +7,14 @@
 //
 
 #import "AppDelegate.h"
-
+#import "MixpanelAPI.h"
 @implementation AppDelegate
 
 @synthesize window = _window;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    [MixpanelAPI sharedAPIWithToken:MIXPANEL_TOKEN];
     return YES;
 }
 							

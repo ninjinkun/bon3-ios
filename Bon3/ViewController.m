@@ -16,6 +16,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "OssansBaseView.h"
 #import "InfoViewController.h"
+#import "MixpanelAPI.h"
+
 #define BUFFER_SIZE 16384
 #define BUFFER_COUNT 3
 #define MUSIC_LENGTH_SECONDS ()
@@ -26,8 +28,6 @@
 #define FRAMECOUNT (1024)
 #define PRELOADING_FRAMECOUNT (1024)
 #define NUM_BUFFERS 3
-
-#define GROUND_HEIGHT 40
 
 @interface ViewController ()
 @property (nonatomic, strong) NSString *playingSamples;
@@ -72,26 +72,33 @@
     });
 }
 
+-(CGFloat)groundHeight {
+    return floor(self.view.frame.size.height / 480 * 40);
+}
+
 -(void)setUpViews {
     _hiddenWebView = [[UIWebView alloc] init];
     
-    _groundView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, self.view.bounds.size.width, GROUND_HEIGHT)];
+    _groundView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - [self groundHeight], self.view.bounds.size.width, [self groundHeight])];
     _groundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     [self.view insertSubview:_groundView atIndex:0];
 
-    _ossanView = [[OssansBaseView alloc] initWithFrame:CGRectMake(0, -GROUND_HEIGHT, self.view.frame.size.width, self.view.frame.size.height)];    
+    _ossanView = [[OssansBaseView alloc] initWithFrame:CGRectMake(0, -[self groundHeight], self.view.frame.size.width, self.view.frame.size.height)];    
     _ossanView.ossansCount = 1;
-    _groundView.backgroundColor = _ossanView.ossanColor = [UIColor greenColor];
-    UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ossanTapped:)];
-    [self.view addGestureRecognizer:recognizer];
+    _groundView.backgroundColor = _ossanView.ossanColor = [UIColor colorWithRed: 1.0 green: 0.3671875 blue: 0.58984375 alpha: 1.0];
+    {
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ossanTapped:)];
+        [_ossanView addGestureRecognizer:recognizer];
+    }
+    {
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ossanTapped:)];
+        [_groundView addGestureRecognizer:recognizer];             
+    }
     [self.view insertSubview:_ossanView atIndex:0];
 }
 
 -(void)ossanTapped:(UITapGestureRecognizer *)sender {
-    float red = arc4random() % 2;
-    float green = arc4random() % 2;
-    float blue = arc4random() % 2;
-    red = red + green + blue >= 3 ? 0 : red;    
+    [[MixpanelAPI sharedAPI] track:@"Ossan Tapped"];
     _groundView.backgroundColor = _ossanView.ossanColor = [UIColor colorWithHue: (float)(arc4random()%360) / 360.0 saturation:1.0 brightness:1.0 alpha:1.0];
     [self nextTrack];
     [self loadSamples];
@@ -128,13 +135,14 @@
     _ossanView.ossanHeights = ossanValues;
     CGRect frame =  _ossanView.frame;    
 
-    float groundHeight = GROUND_HEIGHT; 
+    float groundHeight = [self groundHeight];
     for (NSNumber *num in ossanValues) {
         groundHeight += [num floatValue];
     }
+    // てきとう
     groundHeight /= 1000000;
-    groundHeight *= 2; // 2倍くらい動いた方が良い
-    groundHeight = groundHeight > 20 + GROUND_HEIGHT ? groundHeight : GROUND_HEIGHT;
+    groundHeight *= self.view.frame.size.height / 160;
+    groundHeight = groundHeight > self.view.frame.size.height / 16 + [self groundHeight] ? groundHeight : [self groundHeight];
     frame.origin.y = -groundHeight;
     _ossanView.frame = frame;
     frame = _groundView.frame;
@@ -155,7 +163,18 @@
 }
 
 -(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [[MixpanelAPI sharedAPI] track:UIInterfaceOrientationIsPortrait(toInterfaceOrientation) ? @"Rotate to Portrait" : @"Rotate to Landscape"];
     _ossanView.ossansCount = UIInterfaceOrientationIsPortrait(toInterfaceOrientation) ? 1 : 4;
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    _ossanView.ossansCount = UIInterfaceOrientationIsPortrait(self.interfaceOrientation) ? 1 : 4;
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[MixpanelAPI sharedAPI] track:@"Ossan Page Shown"];
 }
 
 static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {     
