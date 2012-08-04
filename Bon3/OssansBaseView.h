@@ -14,5 +14,4 @@
 @property (nonatomic) NSInteger ossansCount;
 @property (nonatomic, strong) NSArray *ossanHeights;           
 @property (nonatomic, strong) UIColor *ossanColor;
--(void)setOssansCount:(NSInteger)ossansCount animated:(BOOL)animated;
 @end

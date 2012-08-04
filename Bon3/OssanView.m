@@ -17,13 +17,11 @@
     self = [super init];
     if (self) {
         _landingOssanImage = [UIImage imageNamed:@"appimage1"];
-        _ossanImages = [NSArray arrayWithObjects:
-                        [UIImage imageNamed:@"appimage2"], 
+        _ossanImages = @[[UIImage imageNamed:@"appimage2"], 
                         [UIImage imageNamed:@"appimage3"],
                         [UIImage imageNamed:@"appimage4"],
                         [UIImage imageNamed:@"appimage5"],
-                        [UIImage imageNamed:@"appimage6"],
-                        nil];
+                        [UIImage imageNamed:@"appimage6"]];
         self.contents = (__bridge id)_landingOssanImage.CGImage;
     }
     return self;
