@@ -51,7 +51,7 @@
 }
 
 -(void)setUpLocalizedText {
-    _titleLabel.text = NSLocalizedString(@"Tweet bon3", @"Tweet bon3");
+    _titleLabel.text = NSLocalizedString(@"Dance music goes on", @"Dance music goes on");
     [_tweetButton setTitle:NSLocalizedString(@"Tweet bon3", @"Tweet bon3") forState:UIControlStateNormal];
     [_aboutUsButton setTitle:NSLocalizedString(@"Higashi Dance Network", @"Higashi Dance Network") forState:UIControlStateNormal];
 }
