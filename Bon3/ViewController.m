@@ -135,8 +135,10 @@
     for (NSNumber *num in ossanValues) {
         groundHeight += [num floatValue];
     }
+    // てきとう
     groundHeight /= 1000000;
     groundHeight *= 2; // 2倍くらい動いた方が良い
+    groundHeight = UIInterfaceOrientationIsPortrait(self.interfaceOrientation) ? groundHeight * 2 : groundHeight; // 縦ならさらに2倍
     groundHeight = groundHeight > 20 + GROUND_HEIGHT ? groundHeight : GROUND_HEIGHT;
     frame.origin.y = -groundHeight;
     _ossanView.frame = frame;
