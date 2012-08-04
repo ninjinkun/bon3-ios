@@ -1,3 +1,0 @@
-[submodule "modules/GoogleAnalytics-SDK-iOS"]
-	path = modules/GoogleAnalytics-SDK-iOS
-	url = https://github.com/danielctull/GoogleAnalytics-SDK-iOS.git
