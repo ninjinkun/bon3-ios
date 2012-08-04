@@ -14,7 +14,7 @@
 		26BFDC1315A80220007F92F2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26BFDC1115A80220007F92F2 /* AudioToolbox.framework */; };
 		26BFDC1715A80468007F92F2 /* image4-color.svg in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC1515A80468007F92F2 /* image4-color.svg */; };
 		26BFDC1815A80468007F92F2 /* image4.svg in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC1615A80468007F92F2 /* image4.svg */; };
-		26BFDC1F15A82031007F92F2 /* OssanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26BFDC1E15A82031007F92F2 /* OssanView.m */; };
+		26BFDC1F15A82031007F92F2 /* OssanLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 26BFDC1E15A82031007F92F2 /* OssanLayer.m */; };
 		26BFDC2A15A820A9007F92F2 /* appimage1.png in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC2415A820A9007F92F2 /* appimage1.png */; };
 		26BFDC2B15A820A9007F92F2 /* appimage2.png in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC2515A820A9007F92F2 /* appimage2.png */; };
 		26BFDC2C15A820A9007F92F2 /* appimage3.png in Resources */ = {isa = PBXBuildFile; fileRef = 26BFDC2615A820A9007F92F2 /* appimage3.png */; };
@@ -49,8 +49,8 @@
 		26BFDC1115A80220007F92F2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		26BFDC1515A80468007F92F2 /* image4-color.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "image4-color.svg"; path = "Images/image4-color.svg"; sourceTree = "<group>"; };
 		26BFDC1615A80468007F92F2 /* image4.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = image4.svg; path = Images/image4.svg; sourceTree = "<group>"; };
-		26BFDC1D15A82031007F92F2 /* OssanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OssanView.h; sourceTree = "<group>"; };
-		26BFDC1E15A82031007F92F2 /* OssanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OssanView.m; sourceTree = "<group>"; };
+		26BFDC1D15A82031007F92F2 /* OssanLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OssanLayer.h; sourceTree = "<group>"; };
+		26BFDC1E15A82031007F92F2 /* OssanLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OssanLayer.m; sourceTree = "<group>"; };
 		26BFDC2415A820A9007F92F2 /* appimage1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appimage1.png; path = Images/appimage1.png; sourceTree = "<group>"; };
 		26BFDC2515A820A9007F92F2 /* appimage2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appimage2.png; path = Images/appimage2.png; sourceTree = "<group>"; };
 		26BFDC2615A820A9007F92F2 /* appimage3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appimage3.png; path = Images/appimage3.png; sourceTree = "<group>"; };
@@ -211,8 +211,8 @@
 		26E2D5EC15A0780600BD7F67 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				26BFDC1D15A82031007F92F2 /* OssanView.h */,
-				26BFDC1E15A82031007F92F2 /* OssanView.m */,
+				26BFDC1D15A82031007F92F2 /* OssanLayer.h */,
+				26BFDC1E15A82031007F92F2 /* OssanLayer.m */,
 				26F0ED5B15AD3FC200B38B4C /* OssansBaseView.h */,
 				26F0ED5C15AD3FC200B38B4C /* OssansBaseView.m */,
 			);
@@ -315,7 +315,7 @@
 				26E2D5D915A077E800BD7F67 /* main.m in Sources */,
 				26E2D5DD15A077E800BD7F67 /* AppDelegate.m in Sources */,
 				26E2D5E615A077E800BD7F67 /* ViewController.m in Sources */,
-				26BFDC1F15A82031007F92F2 /* OssanView.m in Sources */,
+				26BFDC1F15A82031007F92F2 /* OssanLayer.m in Sources */,
 				26F0ED5D15AD3FC200B38B4C /* OssansBaseView.m in Sources */,
 				2622A9AB15AEED81001DAB85 /* InfoViewController.m in Sources */,
 			);
@@ -411,8 +411,8 @@
 		26E2D5EA15A077E800BD7F67 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Satoshi Asano (3LNLGMY6PB)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Satoshi Asano (3LNLGMY6PB)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Bon3/Bon3-Prefix.pch";
@@ -420,8 +420,8 @@
 				INFOPLIST_FILE = "Bon3/Bon3-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C29D1B09-E5C6-42AF-9C18-BFC1875B10AB";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C29D1B09-E5C6-42AF-9C18-BFC1875B10AB";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

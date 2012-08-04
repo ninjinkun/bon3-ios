@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "OssanView.h"
-@implementation OssanView {
+#import "OssanLayer.h"
+@implementation OssanLayer {
     UIImage *_landingOssanImage;
     NSArray *_ossanImages;
 }
