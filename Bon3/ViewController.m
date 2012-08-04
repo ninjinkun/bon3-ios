@@ -16,6 +16,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "OssansBaseView.h"
 #import "InfoViewController.h"
+#import "MixpanelAPI.h"
+
 #define BUFFER_SIZE 16384
 #define BUFFER_COUNT 3
 #define MUSIC_LENGTH_SECONDS ()
@@ -83,7 +85,8 @@
     _ossanView.ossansCount = 1;
     _groundView.backgroundColor = _ossanView.ossanColor = [UIColor greenColor];
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ossanTapped:)];
-    [self.view addGestureRecognizer:recognizer];
+    [_ossanView addGestureRecognizer:recognizer];
+    [_groundView addGestureRecognizer:recognizer];
     [self.view insertSubview:_ossanView atIndex:0];
 }
 
@@ -155,7 +158,18 @@
 }
 
 -(void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [[MixpanelAPI sharedAPI] track:UIInterfaceOrientationIsPortrait(toInterfaceOrientation) ? @"Rotate to Portrait" : @"Rotate to Landscape"];
     _ossanView.ossansCount = UIInterfaceOrientationIsPortrait(toInterfaceOrientation) ? 1 : 4;
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    _ossanView.ossansCount = UIInterfaceOrientationIsPortrait(self.interfaceOrientation) ? 1 : 4;
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[MixpanelAPI sharedAPI] track:@"Ossan Page Shown"];
 }
 
 static void aqCallBack(void *in, AudioQueueRef q, AudioQueueBufferRef qb) {     

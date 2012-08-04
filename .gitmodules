@@ -1,0 +1,3 @@
+[submodule "modules/mixpanel-iphone"]
+	path = modules/mixpanel-iphone
+	url = https://github.com/mixpanel/mixpanel-iphone.git

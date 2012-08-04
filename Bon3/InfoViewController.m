@@ -7,22 +7,26 @@
 //
 
 #import "InfoViewController.h"
+#import "MixpanelAPI.h"
 #import <Twitter/Twitter.h>
 
 @implementation InfoViewController
--(IBAction)twitterButtonPushed:(id)sender {        
+-(IBAction)twitterButtonPushed:(id)sender {
+    [[MixpanelAPI sharedAPI] track:@"Tweet Button Tapped"];    
     TWTweetComposeViewController *twitterViewController = [[TWTweetComposeViewController alloc] init];
     if (_screenImage) 
         [twitterViewController addImage:_screenImage];    
     [twitterViewController setInitialText:NSLocalizedString(@"Dancing with #bon3", @"Twieet Text")];
     [twitterViewController addURL:[NSURL URLWithString:@"http://higashi-dance-network.appspot.com/bon3/"]];
     [twitterViewController setCompletionHandler:^(TWTweetComposeViewControllerResult result){
+        [[MixpanelAPI sharedAPI] track:@"Tweeted"];
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
     [self presentViewController:twitterViewController animated:YES completion:nil];
 }
 
 -(IBAction)aboutUsButtonPushed:(id)sender {
+    [[MixpanelAPI sharedAPI] track:@"Aboutn Us Button Tapped"];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://higashi-dance-network.appspot.com/bon3/"]];
 }
 
@@ -40,6 +44,11 @@
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[MixpanelAPI sharedAPI] track:@"Info Page Shown"];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

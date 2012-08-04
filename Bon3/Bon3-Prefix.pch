@@ -12,3 +12,6 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+#define MIXPANEL_TOKEN @"5119468eff80b8a0a43b14fd0e68e5c9"
+
