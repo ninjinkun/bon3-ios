@@ -29,8 +29,6 @@
 #define PRELOADING_FRAMECOUNT (1024)
 #define NUM_BUFFERS 3
 
-#define GROUND_HEIGHT 40
-
 @interface ViewController ()
 @property (nonatomic, strong) NSString *playingSamples;
 @property (nonatomic, strong) NSString *loadedSamples;
@@ -74,14 +72,18 @@
     });
 }
 
+-(CGFloat)groundHeight {
+    return floor(self.view.frame.size.height / 480 * 40);
+}
+
 -(void)setUpViews {
     _hiddenWebView = [[UIWebView alloc] init];
     
-    _groundView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, self.view.bounds.size.width, GROUND_HEIGHT)];
+    _groundView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, self.view.bounds.size.width, [self groundHeight])];
     _groundView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     [self.view insertSubview:_groundView atIndex:0];
 
-    _ossanView = [[OssansBaseView alloc] initWithFrame:CGRectMake(0, -GROUND_HEIGHT, self.view.frame.size.width, self.view.frame.size.height)];    
+    _ossanView = [[OssansBaseView alloc] initWithFrame:CGRectMake(0, -[self groundHeight], self.view.frame.size.width, self.view.frame.size.height)];    
     _ossanView.ossansCount = 1;
     _groundView.backgroundColor = _ossanView.ossanColor = [UIColor colorWithRed: 1.0 green: 0.3671875 blue: 0.58984375 alpha: 1.0];
     {
@@ -132,14 +134,14 @@
     _ossanView.ossanHeights = ossanValues;
     CGRect frame =  _ossanView.frame;    
 
-    float groundHeight = GROUND_HEIGHT; 
+    float groundHeight = [self groundHeight];
     for (NSNumber *num in ossanValues) {
         groundHeight += [num floatValue];
     }
     // てきとう
     groundHeight /= 1000000;
     groundHeight *= self.view.frame.size.height / 160;
-    groundHeight = groundHeight > self.view.frame.size.height / 16 + GROUND_HEIGHT ? groundHeight : GROUND_HEIGHT;
+    groundHeight = groundHeight > self.view.frame.size.height / 16 + [self groundHeight] ? groundHeight : [self groundHeight];
     frame.origin.y = -groundHeight;
     _ossanView.frame = frame;
     frame = _groundView.frame;
