@@ -19,7 +19,11 @@
     [twitterViewController setInitialText:NSLocalizedString(@"Dancing with #bon3", @"Twieet Text")];
     [twitterViewController addURL:[NSURL URLWithString:@"http://higashi-dance-network.appspot.com/bon3/"]];
     [twitterViewController setCompletionHandler:^(TWTweetComposeViewControllerResult result){
-        [[MixpanelAPI sharedAPI] track:@"Tweeted"];
+        if (result == TWTweetComposeViewControllerResultDone)
+            [[MixpanelAPI sharedAPI] track:@"Tweeted"];
+        else
+            [[MixpanelAPI sharedAPI] track:@"Tweet Canceled"];                
+
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
     [self presentViewController:twitterViewController animated:YES completion:nil];

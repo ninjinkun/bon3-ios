@@ -98,6 +98,7 @@
 }
 
 -(void)ossanTapped:(UITapGestureRecognizer *)sender {
+    [[MixpanelAPI sharedAPI] track:@"Ossan Tapped"];
     _groundView.backgroundColor = _ossanView.ossanColor = [UIColor colorWithHue: (float)(arc4random()%360) / 360.0 saturation:1.0 brightness:1.0 alpha:1.0];
     [self nextTrack];
     [self loadSamples];
