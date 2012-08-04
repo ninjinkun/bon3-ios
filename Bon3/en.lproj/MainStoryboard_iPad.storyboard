@@ -118,26 +118,20 @@
         <image name="info-tweeticon~ipad.png" width="89" height="73"/>
         <image name="info-tweet~ipad.png" width="687" height="145"/>
         <image name="info~ipad.png" width="768" height="1004"/>
-        <image name="tweet-button-shine.png" width="134" height="134"/>
-        <image name="tweet-button.png" width="134" height="134"/>
+        <image name="tweet-button-shine.png" width="67" height="67"/>
+        <image name="tweet-button.png" width="67" height="67"/>
     </resources>
     <classes>
         <class className="InfoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/InfoViewController.h"/>
             <relationships>
-                <relationship kind="action" name="aboutUsButtonPushed:"/>
-                <relationship kind="action" name="closeButtonPushed:"/>
-                <relationship kind="action" name="twitterButtonPushed:"/>
-                <relationship kind="outlet" name="_aboutUsButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="_titleLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="_tweetButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="tweetButton" candidateClass="UIButton"/>
             </relationships>
         </class>
         <class className="ViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
             <relationships>
-                <relationship kind="outlet" name="_tweetButton" candidateClass="UIButton"/>
+                <relationship kind="action" name="twitterButtonPushed:"/>
             </relationships>
         </class>
     </classes>
