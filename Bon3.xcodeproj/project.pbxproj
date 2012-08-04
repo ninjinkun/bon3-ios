@@ -52,6 +52,10 @@
 		26ED3E1515CCF88300890E91 /* image6@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 26ED3E0315CCF88300890E91 /* image6@2x~ipad.png */; };
 		26ED3E1615CCF88300890E91 /* image6@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 26ED3E0415CCF88300890E91 /* image6@2x~iphone.png */; };
 		26ED3E1715CCF88300890E91 /* image6~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 26ED3E0515CCF88300890E91 /* image6~ipad.png */; };
+		26ED3E1915CCF95F00890E91 /* appicon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 26ED3E1815CCF95F00890E91 /* appicon~ipad.png */; };
+		26ED3E1B15CCF97100890E91 /* appicon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 26ED3E1A15CCF97100890E91 /* appicon@2x~ipad.png */; };
+		26ED3E1D15CCF98500890E91 /* appicon~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 26ED3E1C15CCF98500890E91 /* appicon~iphone.png */; };
+		26ED3E1F15CCF98C00890E91 /* appicon@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 26ED3E1E15CCF98C00890E91 /* appicon@2x~iphone.png */; };
 		26F0ED5D15AD3FC200B38B4C /* OssansBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 26F0ED5C15AD3FC200B38B4C /* OssansBaseView.m */; };
 /* End PBXBuildFile section */
 
@@ -116,6 +120,10 @@
 		26ED3E0315CCF88300890E91 /* image6@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "image6@2x~ipad.png"; path = "Images/image6@2x~ipad.png"; sourceTree = "<group>"; };
 		26ED3E0415CCF88300890E91 /* image6@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "image6@2x~iphone.png"; path = "Images/image6@2x~iphone.png"; sourceTree = "<group>"; };
 		26ED3E0515CCF88300890E91 /* image6~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "image6~ipad.png"; path = "Images/image6~ipad.png"; sourceTree = "<group>"; };
+		26ED3E1815CCF95F00890E91 /* appicon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appicon~ipad.png"; sourceTree = "<group>"; };
+		26ED3E1A15CCF97100890E91 /* appicon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appicon@2x~ipad.png"; sourceTree = "<group>"; };
+		26ED3E1C15CCF98500890E91 /* appicon~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appicon~iphone.png"; sourceTree = "<group>"; };
+		26ED3E1E15CCF98C00890E91 /* appicon@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appicon@2x~iphone.png"; sourceTree = "<group>"; };
 		26F0ED5B15AD3FC200B38B4C /* OssansBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OssansBaseView.h; sourceTree = "<group>"; };
 		26F0ED5C15AD3FC200B38B4C /* OssansBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OssansBaseView.m; sourceTree = "<group>"; };
 		26F0ED5E15AD42B100B38B4C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -197,6 +205,10 @@
 		26E2D5BD15A077E800BD7F67 = {
 			isa = PBXGroup;
 			children = (
+				26ED3E1E15CCF98C00890E91 /* appicon@2x~iphone.png */,
+				26ED3E1C15CCF98500890E91 /* appicon~iphone.png */,
+				26ED3E1A15CCF97100890E91 /* appicon@2x~ipad.png */,
+				26ED3E1815CCF95F00890E91 /* appicon~ipad.png */,
 				26E2D5D215A077E800BD7F67 /* Bon3 */,
 				26E2D5CB15A077E800BD7F67 /* Frameworks */,
 				26BFDC0C15A7FD97007F92F2 /* Resources */,
@@ -407,6 +419,10 @@
 				26ED3E1515CCF88300890E91 /* image6@2x~ipad.png in Resources */,
 				26ED3E1615CCF88300890E91 /* image6@2x~iphone.png in Resources */,
 				26ED3E1715CCF88300890E91 /* image6~ipad.png in Resources */,
+				26ED3E1915CCF95F00890E91 /* appicon~ipad.png in Resources */,
+				26ED3E1B15CCF97100890E91 /* appicon@2x~ipad.png in Resources */,
+				26ED3E1D15CCF98500890E91 /* appicon~iphone.png in Resources */,
+				26ED3E1F15CCF98C00890E91 /* appicon@2x~iphone.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
