@@ -83,7 +83,7 @@
 
     _ossanView = [[OssansBaseView alloc] initWithFrame:CGRectMake(0, -GROUND_HEIGHT, self.view.frame.size.width, self.view.frame.size.height)];    
     _ossanView.ossansCount = 1;
-    _groundView.backgroundColor = _ossanView.ossanColor = [UIColor greenColor];
+    _groundView.backgroundColor = _ossanView.ossanColor = [UIColor colorWithRed: 1.0 green: 0.3671875 blue: 0.58984375 alpha: 1.0];
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ossanTapped:)];
     [_ossanView addGestureRecognizer:recognizer];
     [_groundView addGestureRecognizer:recognizer];

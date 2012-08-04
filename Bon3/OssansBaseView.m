@@ -18,7 +18,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        self.ossanColor = [UIColor greenColor];
+        self.ossanColor = [UIColor colorWithRed: 1.0 green: 0.3671875 blue: 0.58984375 alpha: 1.0];
     }
     return self;
 }
