@@ -119,6 +119,23 @@
         <image name="info-tweet~iphone.png" width="308" height="70"/>
         <image name="info~iphone.png" width="320" height="480"/>
     </resources>
+    <classes>
+        <class className="InfoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/InfoViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="aboutUsButtonPushed:"/>
+                <relationship kind="action" name="closeButtonPushed:"/>
+                <relationship kind="action" name="twitterButtonPushed:"/>
+                <relationship kind="outlet" name="_aboutUsButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="_titleLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="_tweetButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="tweetButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
+        <class className="ViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <nil key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
