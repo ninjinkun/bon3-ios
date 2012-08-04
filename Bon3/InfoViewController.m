@@ -27,7 +27,7 @@
 
 -(IBAction)aboutUsButtonPushed:(id)sender {
     [[MixpanelAPI sharedAPI] track:@"Aboutn Us Button Tapped"];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://higashi-dance-network.appspot.com/bon3/"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://higashi-dance-network.appspot.com/"]];
 }
 
 -(IBAction)closeButtonPushed:(id)sender {
