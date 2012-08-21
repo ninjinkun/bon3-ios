@@ -55,7 +55,7 @@
         NSMutableArray *ossanViews = [NSMutableArray array];        
         for (int i = 0; i < ossansCount; i++) {
             CGRect frame = CGRectZero;
-            frame.size = [UIImage imageNamed:@"appimage1"].size;
+            frame.size = [UIImage imageNamed:@"image1"].size;
 
             OssanLayer *view = [[OssanLayer alloc] init];
             view.frame = frame;
